@@ -21,6 +21,9 @@ public class Img {
             largura = getImagem().getWidth();
             altura = getImagem().getHeight();
             matriz = new int[largura][altura][3];
+            /*
+             * Percore a matriz de cima para baixo da esquerda para a direita
+             */
             for (int linha = 0; linha < altura; linha++) {
                 for (int coluna = 0; coluna < largura; coluna++) {
                     Color pixel = new Color(getImagem().getRGB(coluna, linha));
@@ -42,6 +45,46 @@ public class Img {
                 int b = matriz[coluna][linha][2];
                 Color pixel = new Color(r, g, b);
                 getImagem().setRGB(coluna, linha, pixel.getRGB());
+            }
+        }
+    }
+    
+    public void cinza(){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                //tons de cinza
+                int cinza = (r + g + b)/3;
+                //seta os tons de cinza na matriz
+                matriz[coluna][linha][0] = cinza;
+                matriz[coluna][linha][1] = cinza;
+                matriz[coluna][linha][2] = cinza;
+            }
+        }
+    }
+    
+    public void brilho(Integer valor){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0] + valor;
+                int g = matriz[coluna][linha][1] + valor;
+                int b = matriz[coluna][linha][2] + valor;
+                
+                //seta os tons de cinza na matriz
+                if(r > 255)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    matriz[coluna][linha][0] = r;
+                if(g > 255)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    matriz[coluna][linha][1] = g;
+                if(b > 255)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    matriz[coluna][linha][2] = b;
             }
         }
     }
