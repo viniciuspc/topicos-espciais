@@ -76,15 +76,24 @@ public class Img {
                 if(r > 255)
                     matriz[coluna][linha][0] = 255;
                 else
-                    matriz[coluna][linha][0] = r;
+                    if(r<0)
+                        matriz[coluna][linha][0] = 0;
+                    else
+                        matriz[coluna][linha][0] = r;
                 if(g > 255)
                     matriz[coluna][linha][1] = 255;
                 else
-                    matriz[coluna][linha][1] = g;
+                    if(g<0)
+                        matriz[coluna][linha][1] = 0;
+                    else
+                        matriz[coluna][linha][1] = g;
                 if(b > 255)
                     matriz[coluna][linha][2] = 255;
                 else
-                    matriz[coluna][linha][2] = b;
+                    if(b<0)
+                        matriz[coluna][linha][2] = 0;
+                    else
+                        matriz[coluna][linha][2] = b;
             }
         }
     }
