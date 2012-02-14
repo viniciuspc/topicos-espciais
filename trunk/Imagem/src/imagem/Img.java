@@ -98,6 +98,42 @@ public class Img {
         }
     }
     
+    /**
+     * Feito por diversão o professsor não fez na aula mas pediu para fazer :)
+     * @param valor
+     */
+    public void contraste(int valor){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                double r = matriz[coluna][linha][0] * (valor/10);
+                double g = matriz[coluna][linha][1] * (valor/10);
+                double b = matriz[coluna][linha][2] * (valor/10);
+                
+                //seta os tons de cinza na matriz
+                if(r > 255)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    if(r<0)
+                        matriz[coluna][linha][0] = 0;
+                    else
+                        matriz[coluna][linha][0] = (int) r;
+                if(g > 255)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    if(g<0)
+                        matriz[coluna][linha][1] = 0;
+                    else
+                        matriz[coluna][linha][1] = (int) g;
+                if(b > 255)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    if(b<0)
+                        matriz[coluna][linha][2] = 0;
+                    else
+                        matriz[coluna][linha][2] = (int) b;
+            }
+        }
+    }
    
     public BufferedImage getImagem() {
         return imagem;
