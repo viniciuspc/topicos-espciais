@@ -49,6 +49,18 @@ public class Img {
         }
     }
     
+    public void azul() {
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                Color pixel = new Color(r, g, b);
+                getImagem().setRGB(coluna, linha, pixel.getRGB());
+            }
+        }
+    }
+    
     public void cinza(){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -133,6 +145,14 @@ public class Img {
                         matriz[coluna][linha][2] = (int) b;
             }
         }
+    }
+    
+    public void salvar(BufferedImage imagem) throws IOException{
+    	File imgSalva = new File("salvo.jpg");
+    	ImageIO.write(imagem, "jpg", imgSalva);
+    	System.out.println(imgSalva.getAbsolutePath());
+    	
+    	
     }
    
     public BufferedImage getImagem() {
