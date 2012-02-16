@@ -207,7 +207,7 @@ public class Img {
         densidade=(ptosPreto/nunPixel) * 100;
         System.out.println("Densidade: ");
         System.out.println("Pontos Pretos: "+ ptosPreto);
-        System.out.println("Número de pixels :"+ nunPixel+" Altura: "+altura+"Largura: "+largura);
+        System.out.println("Número de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
         System.out.println("Densidade "+ densidade + "%");
    }
     
