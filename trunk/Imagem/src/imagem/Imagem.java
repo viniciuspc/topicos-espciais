@@ -13,8 +13,8 @@ public class Imagem {
         //Fara modificacoes
         //Soma os ponstos e tira a media 
         i.cinza();
-        //i.brilho(50);
-        //i.contraste(2);
+        //i.brilho(0);
+        //i.contraste(0);
        // i.negativo();
        i.limiar_threshould(127);
         i.densidade();
