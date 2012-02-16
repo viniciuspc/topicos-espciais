@@ -161,6 +161,7 @@ public class Img {
         }
     }
     
+    //Binarização usar com tons de cinza
     public void limiar_threshould(int limiar){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -185,6 +186,30 @@ public class Img {
             }
         }
     }
+    
+    //nescessário usar a binarização
+    public void densidade(){
+        double nunPixel = altura*largura;
+        double ptosPreto = 0;
+        double densidade;
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r == 0 && g == 0 && b == 0){
+                    ptosPreto++;
+                }
+                
+            }
+        }
+        densidade=(ptosPreto/nunPixel) * 100;
+        System.out.println("Densidade: ");
+        System.out.println("Pontos Pretos: "+ ptosPreto);
+        System.out.println("Número de pixels :"+ nunPixel+" Altura: "+altura+"Largura: "+largura);
+        System.out.println("Densidade "+ densidade + "%");
+   }
     
     
     public void salvar(BufferedImage imagem) throws IOException{

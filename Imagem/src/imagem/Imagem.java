@@ -9,14 +9,15 @@ public class Imagem {
         System.out.println();
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        i.lerArquivo("Imagem2.jpg");
+        i.lerArquivo("Imagem.jpg");
         //Fara modificacoes
         //Soma os ponstos e tira a media 
-        //i.cinza();
-        // i.brilho(50);
-        //i.contraste(1.2);
-        //i.negativo();;
-        i.limiar_threshould(200);
+        i.cinza();
+        //i.brilho(50);
+        //i.contraste(2);
+       // i.negativo();
+       i.limiar_threshould(127);
+        i.densidade();
         //Da matriz para o buffer
         i.lerMatriz();
         //i.salvar(i.getImagem());
