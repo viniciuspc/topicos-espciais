@@ -111,15 +111,15 @@ public class Img {
     }
     
     /**
-     * Feito por diversão o professsor não fez na aula mas pediu para fazer :)
+     * Feito por diversao o professsor nï¿½o fez na aula mas pediu para fazer :)
      * @param valor
      */
-    public void contraste(int valor){
+    public void contraste(double valor){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
-                double r = matriz[coluna][linha][0] * (valor/10);
-                double g = matriz[coluna][linha][1] * (valor/10);
-                double b = matriz[coluna][linha][2] * (valor/10);
+                double r = matriz[coluna][linha][0] * (valor);
+                double g = matriz[coluna][linha][1] * (valor);
+                double b = matriz[coluna][linha][2] * (valor);
                 
                 //seta os tons de cinza na matriz
                 if(r > 255)
@@ -146,6 +146,46 @@ public class Img {
             }
         }
     }
+    
+    public void negativo(){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = 255-matriz[coluna][linha][0];
+                int g = 255-matriz[coluna][linha][1];
+                int b = 255-matriz[coluna][linha][2];
+                
+                matriz[coluna][linha][0] = r;
+                matriz[coluna][linha][1] = g;
+                matriz[coluna][linha][2] = b;
+            }
+        }
+    }
+    
+    public void limiar_threshould(int limiar){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r > limiar)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    matriz[coluna][linha][0] = 0;
+                
+                if(g > limiar)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    matriz[coluna][linha][1] = 0;
+                
+                if(b > limiar)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    matriz[coluna][linha][2] = 0;
+            }
+        }
+    }
+    
     
     public void salvar(BufferedImage imagem) throws IOException{
     	File imgSalva = new File("salvo.jpg");
