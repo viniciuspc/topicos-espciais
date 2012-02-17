@@ -8,9 +8,14 @@ public class Teste {
 	public static void main(String[] args) {
 		//OBTER CONEXAO
 		EntityManager em = Persistence.createEntityManagerFactory("bibliotecaPU").createEntityManager();
+		
+		Categoria categoria = new Categoria();
+		categoria.setDescriacao("Informática");
+		
 		Livro livro = new Livro();
-		livro.setAutor("Fulano");
-		livro.setTitulo("JPA");
+		livro.setAutor("Outro");
+		livro.setTitulo("Hibernate");
+		livro.setCategoria(categoria);
 		
 		em.getTransaction().begin();
 		em.persist(livro);

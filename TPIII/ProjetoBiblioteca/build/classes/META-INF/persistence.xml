@@ -9,6 +9,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 	
 		<class>com.biblioteca.Livro</class>
+		<class>com.biblioteca.Categoria</class>
 	
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />
