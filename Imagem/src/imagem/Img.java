@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 public class Img {
 
     private BufferedImage imagem;
+    private BufferedImage imagemResultado;
     private int largura;
     private int altura;
     int[][][] matriz;
@@ -22,6 +23,7 @@ public class Img {
     public void lerArquivo(String arquivo) {
         try {
             imagem = ImageIO.read(new File(arquivo));
+            imagemResultado = ImageIO.read(new File(arquivo));
             largura = getImagem().getWidth();
             altura = getImagem().getHeight();
             matriz = new int[largura][altura][3];
@@ -58,6 +60,30 @@ public class Img {
         }
     }
     
+    public void lerMatrizResultado() {
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matrizResultado[coluna][linha][0];
+                int g = matrizResultado[coluna][linha][1];
+                int b = matrizResultado[coluna][linha][2];
+                Color pixel = new Color(r, g, b);
+                getImagemResultado().setRGB(coluna, linha, pixel.getRGB());
+            }
+        }
+    }
+    
+    public void lerMatrizCinza() {
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][0];
+                int b = matriz[coluna][linha][0];
+                Color pixel = new Color(r, g, b);
+                getImagem().setRGB(coluna, linha, pixel.getRGB());
+            }
+        }
+    }
+    
     public void azul() {
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -77,7 +103,8 @@ public class Img {
                 int g = matriz[coluna][linha][1];
                 int b = matriz[coluna][linha][2];
                 //tons de cinza
-                int cinza = (r + g + b)/3;
+               // int cinza = (r + g + b)/3;
+                int cinza = (int) (r*0.3+g*0.59+b*0.11);
                 //seta os tons de cinza na matriz
                 matriz[coluna][linha][0] = cinza;
                 matriz[coluna][linha][1] = cinza;
@@ -91,24 +118,21 @@ public class Img {
      * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
      * (L  , C-1)   (L  , C  )  (L  , C+1)
      * (L+1, C-1)   (L+1, C  )  (L+1, C+1)
-     * TODO Implementar usando mascara 3x3.
      **/
     public void media(){
-        int[][][] mascara = new int[3][3][3];
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
-                for(int linhaMascara = 0; linhaMascara < 3;linhaMascara ++ ){
-                    for(int colunaMascara = 0; colunaMascara < 3;colunaMascara ++ ){
-                        int r = matriz[coluna][linha][0];
-                        int g = matriz[coluna][linha][1];
-                        int b = matriz[coluna][linha][2];
-                        //tons de cinza
-                        int cinza = (r + g + b)/3;
-                        
-                    }
-                }
-                       //Atribuir os pontos
-                
+                	matrizResultado[coluna][linha][0] = (matriz[coluna-1][linha-1][0]+matriz[coluna][linha-1][0]+matriz[coluna+1][linha-1][0]
+                    		+matriz[coluna-1][linha][0]+matriz[coluna][linha][0]+matriz[coluna+1][linha][0]
+                    		+matriz[coluna-1][linha+1][0]+matriz[coluna][linha+1][0]+matriz[coluna+1][linha+1][0])/9;
+                    
+                	matrizResultado[coluna][linha][1] = (matriz[coluna-1][linha-1][1]+matriz[coluna][linha-1][1]+matriz[coluna+1][linha-1][1]
+                    		+matriz[coluna-1][linha][1]+matriz[coluna][linha][1]+matriz[coluna+1][linha][1]
+                    		+matriz[coluna-1][linha+1][1]+matriz[coluna][linha+1][1]+matriz[coluna+1][linha+1][1])/9;
+                    
+                	matrizResultado[coluna][linha][2] = (matriz[coluna-1][linha-1][2]+matriz[coluna][linha-1][2]+matriz[coluna+1][linha-1][2]
+                    		+matriz[coluna-1][linha][2]+matriz[coluna][linha][2]+matriz[coluna+1][linha][2]
+                    		+matriz[coluna-1][linha+1][2]+matriz[coluna][linha+1][2]+matriz[coluna+1][linha+1][2])/9;         
             }
         }
     }
@@ -122,14 +146,22 @@ public class Img {
      * TODO Implementar usando mascara 3x3.
      **/
     public void mediana(){
-        
-        for (int linha = 1; linha < altura-2; linha++) {
+    	for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][1];
-                int b = matriz[coluna][linha][2];
+                	matrizResultado[coluna][linha][0] = (matriz[coluna-1][linha-1][0]+matriz[coluna][linha-1][0]+matriz[coluna+1][linha-1][0]
+                    		+matriz[coluna-1][linha][0]+matriz[coluna][linha][0]+matriz[coluna+1][linha][0]
+                    		+matriz[coluna-1][linha+1][0]+matriz[coluna][linha+1][0]+matriz[coluna+1][linha+1][0])/9;
+                    
+                	matrizResultado[coluna][linha][1] = (matriz[coluna-1][linha-1][1]+matriz[coluna][linha-1][1]+matriz[coluna+1][linha-1][1]
+                    		+matriz[coluna-1][linha][1]+matriz[coluna][linha][1]+matriz[coluna+1][linha][1]
+                    		+matriz[coluna-1][linha+1][1]+matriz[coluna][linha+1][1]+matriz[coluna+1][linha+1][1])/9;
+                    
+                	matrizResultado[coluna][linha][2] = (matriz[coluna-1][linha-1][2]+matriz[coluna][linha-1][2]+matriz[coluna+1][linha-1][2]
+                    		+matriz[coluna-1][linha][2]+matriz[coluna][linha][2]+matriz[coluna+1][linha][2]
+                    		+matriz[coluna-1][linha+1][2]+matriz[coluna][linha+1][2]+matriz[coluna+1][linha+1][2])/9;         
             }
         }
+    	
     }
     
     /**
@@ -227,6 +259,7 @@ public class Img {
         }
     }
     
+    
     //Binarização usar com tons de cinza
     public void limiar_threshould(int limiar){
         for (int linha = 0; linha < altura; linha++) {
@@ -246,6 +279,31 @@ public class Img {
                     matriz[coluna][linha][1] = 0;
                 
                 if(b > limiar)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    matriz[coluna][linha][2] = 0;
+            }
+        }
+    }
+    
+    public void limiar_threshould_inverso(int limiar){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r < limiar)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    matriz[coluna][linha][0] = 0;
+                
+                if(g < limiar)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    matriz[coluna][linha][1] = 0;
+                
+                if(b < limiar)
                     matriz[coluna][linha][2] = 255;
                 else
                     matriz[coluna][linha][2] = 0;
@@ -288,5 +346,9 @@ public class Img {
    
     public BufferedImage getImagem() {
         return imagem;
+    }
+    
+    public BufferedImage getImagemResultado() {
+        return imagemResultado;
     }
 }
