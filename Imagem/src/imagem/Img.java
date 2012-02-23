@@ -132,6 +132,17 @@ public class Img {
         }
     }
     
+    /**
+     * (x1(L-1, C-1) +  x2(L-1, C  ) + x3(L-1, C+1)
+     * + x4(L  , C-1) +  x5(L  , C  ) + x6(L  , C+1)
+     * + x7(L+1, C-1) +  x8(L+1, C  ) + x9(L+1, C+1))
+     * /(x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9)
+     * TODO Implementar usando mascara 3x3.
+     **/
+    public void metodoX(){
+        
+    }
+    
     public void brilho(Integer valor){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
