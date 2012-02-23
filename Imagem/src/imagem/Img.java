@@ -14,6 +14,10 @@ public class Img {
     private int largura;
     private int altura;
     int[][][] matriz;
+    /**
+     * Usado onde é bescessário usar uma máscara
+     */
+    int[][][] matrizResultado;
 
     public void lerArquivo(String arquivo) {
         try {
@@ -21,6 +25,7 @@ public class Img {
             largura = getImagem().getWidth();
             altura = getImagem().getHeight();
             matriz = new int[largura][altura][3];
+            matrizResultado = new int[largura][altura][3];
             /*
              * Percore a matriz de cima para baixo da esquerda para a direita
              */
@@ -28,10 +33,14 @@ public class Img {
                 for (int coluna = 0; coluna < largura; coluna++) {
                     Color pixel = new Color(getImagem().getRGB(coluna, linha));
                     matriz[coluna][linha][0] = pixel.getRed();
+                    matrizResultado[coluna][linha][0] = pixel.getRed();
                     matriz[coluna][linha][1] = pixel.getGreen();
+                    matrizResultado[coluna][linha][1] = pixel.getGreen();
                     matriz[coluna][linha][2] = pixel.getBlue();
+                    matrizResultado[coluna][linha][2] = pixel.getBlue();
                 }
             }
+            
         } catch (IOException ex) {
             Logger.getLogger(Img.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,6 +82,52 @@ public class Img {
                 matriz[coluna][linha][0] = cinza;
                 matriz[coluna][linha][1] = cinza;
                 matriz[coluna][linha][2] = cinza;
+            }
+        }
+    }
+    
+    /**
+     * Filtro Passa Baixa (Diminuição de ruido) usar com tons de cinza.
+     * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
+     * (L  , C-1)   (L  , C  )  (L  , C+1)
+     * (L+1, C-1)   (L+1, C  )  (L+1, C+1)
+     * TODO Implementar usando mascara 3x3.
+     **/
+    public void media(){
+        int[][][] mascara = new int[3][3][3];
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                for(int linhaMascara = 0; linhaMascara < 3;linhaMascara ++ ){
+                    for(int colunaMascara = 0; colunaMascara < 3;colunaMascara ++ ){
+                        int r = matriz[coluna][linha][0];
+                        int g = matriz[coluna][linha][1];
+                        int b = matriz[coluna][linha][2];
+                        //tons de cinza
+                        int cinza = (r + g + b)/3;
+                        
+                    }
+                }
+                       //Atribuir os pontos
+                
+            }
+        }
+    }
+    
+    /**
+     * Filtro Passa Baixa (Diminuição de ruido) usar com tons de cinza.
+     * Mediana ordena e pega o do meio.
+     * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
+     * (L  , C-1)   (L  , C  )  (L  , C+1)
+     * (L+1, C-1)   (L+1, C  )  (L+1, C+1)
+     * TODO Implementar usando mascara 3x3.
+     **/
+    public void mediana(){
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
             }
         }
     }
