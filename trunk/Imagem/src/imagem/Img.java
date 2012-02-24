@@ -148,7 +148,6 @@ public class Img {
      * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
      * (L  , C-1)   (L  , C  )  (L  , C+1)
      * (L+1, C-1)   (L+1, C  )  (L+1, C+1)
-     * TODO Implementar usando mascara 3x3.
      **/
     public void mediana(){
     	List<Integer> lista = new ArrayList<Integer>();
