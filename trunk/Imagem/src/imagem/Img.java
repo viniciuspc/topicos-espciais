@@ -4,8 +4,13 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 
 public class Img {
@@ -146,19 +151,48 @@ public class Img {
      * TODO Implementar usando mascara 3x3.
      **/
     public void mediana(){
+    	List<Integer> lista = new ArrayList<Integer>();
     	for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
-                	matrizResultado[coluna][linha][0] = (matriz[coluna-1][linha-1][0]+matriz[coluna][linha-1][0]+matriz[coluna+1][linha-1][0]
-                    		+matriz[coluna-1][linha][0]+matriz[coluna][linha][0]+matriz[coluna+1][linha][0]
-                    		+matriz[coluna-1][linha+1][0]+matriz[coluna][linha+1][0]+matriz[coluna+1][linha+1][0])/9;
+            	
+            		lista.clear();
+                	lista.add(matriz[coluna-1][linha-1][0]);
+                	lista.add(matriz[coluna][linha-1][0]);
+                	lista.add(matriz[coluna+1][linha-1][0]);
+                	lista.add(matriz[coluna-1][linha][0]);
+                	lista.add(matriz[coluna][linha][0]);
+                	lista.add(matriz[coluna+1][linha][0]);
+                	lista.add(matriz[coluna-1][linha+1][0]);
+                	lista.add(matriz[coluna][linha+1][0]);
+                	lista.add(matriz[coluna+1][linha+1][0]);
                     
-                	matrizResultado[coluna][linha][1] = (matriz[coluna-1][linha-1][1]+matriz[coluna][linha-1][1]+matriz[coluna+1][linha-1][1]
-                    		+matriz[coluna-1][linha][1]+matriz[coluna][linha][1]+matriz[coluna+1][linha][1]
-                    		+matriz[coluna-1][linha+1][1]+matriz[coluna][linha+1][1]+matriz[coluna+1][linha+1][1])/9;
+                	matrizResultado[coluna][linha][0] = retornaMediana(lista);
+                	
+                	lista.clear();
+                	lista.add(matriz[coluna-1][linha-1][1]);
+                	lista.add(matriz[coluna][linha-1][1]);
+                	lista.add(matriz[coluna+1][linha-1][1]);
+                	lista.add(matriz[coluna-1][linha][1]);
+                	lista.add(matriz[coluna][linha][1]);
+                	lista.add(matriz[coluna+1][linha][1]);
+                	lista.add(matriz[coluna-1][linha+1][1]);
+                	lista.add(matriz[coluna][linha+1][1]);
+                	lista.add(matriz[coluna+1][linha+1][1]);
                     
-                	matrizResultado[coluna][linha][2] = (matriz[coluna-1][linha-1][2]+matriz[coluna][linha-1][2]+matriz[coluna+1][linha-1][2]
-                    		+matriz[coluna-1][linha][2]+matriz[coluna][linha][2]+matriz[coluna+1][linha][2]
-                    		+matriz[coluna-1][linha+1][2]+matriz[coluna][linha+1][2]+matriz[coluna+1][linha+1][2])/9;         
+                	matrizResultado[coluna][linha][1] = retornaMediana(lista);
+                	
+                	lista.clear();
+                	lista.add(matriz[coluna-1][linha-1][2]);
+                	lista.add(matriz[coluna][linha-1][2]);
+                	lista.add(matriz[coluna+1][linha-1][2]);
+                	lista.add(matriz[coluna-1][linha][2]);
+                	lista.add(matriz[coluna][linha][2]);
+                	lista.add(matriz[coluna+1][linha][2]);
+                	lista.add(matriz[coluna-1][linha+1][2]);
+                	lista.add(matriz[coluna][linha+1][2]);
+                	lista.add(matriz[coluna+1][linha+1][2]);
+                    
+                	matrizResultado[coluna][linha][2] = retornaMediana(lista);                	       
             }
         }
     	
@@ -342,6 +376,11 @@ public class Img {
     	System.out.println(imgSalva.getAbsolutePath());
     	
     	
+    }
+    
+    public int retornaMediana(List<Integer> lista){
+    	Collections.sort(lista);
+    	return lista.get((lista.size()+1)/2);
     }
    
     public BufferedImage getImagem() {
