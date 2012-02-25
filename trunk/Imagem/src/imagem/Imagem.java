@@ -12,15 +12,17 @@ public class Imagem {
         i.lerArquivo("imagem.jpg");
         //Fara modificacoes
         //Soma os ponstos e tira a media 
-        //i.cinza();
-        //i.brilho(0);
-        //i.contraste(0);
+        i.cinza();
+        //i.cinzaResultado();
+        //i.brilho(80);
+        //i.contraste(3);
         //i.negativo();
-        //i.limiar_threshould(151);
+        i.limiar_threshould(127);
         //i.limiar_threshould_inverso(127);
-        //i.media();
+       // i.media();
         i.mediana();
         i.densidade();
+        i.densidadeResultado();
         //Da matriz para o buffer
         i.lerMatriz();
         i.lerMatrizResultado();

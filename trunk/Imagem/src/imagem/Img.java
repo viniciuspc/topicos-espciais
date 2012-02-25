@@ -101,6 +101,9 @@ public class Img {
         }
     }
     
+    /**
+     * Altera a matriz original
+     */
     public void cinza(){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -114,6 +117,27 @@ public class Img {
                 matriz[coluna][linha][0] = cinza;
                 matriz[coluna][linha][1] = cinza;
                 matriz[coluna][linha][2] = cinza;
+            }
+        }
+    }
+    
+    /**
+     * Deixa a matriz original e altera a matrizResultado
+     * NÃO SERVE PARA TRANSFORMAR A IMAGEM EM PRETRO E BRANCO PARA SER USADO EM OUTRA FUNÇÂO PARA ISSO USE cinza()
+     */
+    public void cinzaResultado(){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                //tons de cinza
+               // int cinza = (r + g + b)/3;
+                int cinza = (int) (r*0.3+g*0.59+b*0.11);
+                //seta os tons de cinza na matriz
+                matrizResultado[coluna][linha][0] = cinza;
+                matrizResultado[coluna][linha][1] = cinza;
+                matrizResultado[coluna][linha][2] = cinza;
             }
         }
     }
@@ -363,6 +387,29 @@ public class Img {
         }
         densidade=(ptosPreto/nunPixel) * 100;
         System.out.println("Densidade: ");
+        System.out.println("Pontos Pretos: "+ ptosPreto);
+        System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
+        System.out.println("Densidade "+ densidade + "%");
+   }
+    
+    public void densidadeResultado(){
+        double nunPixel = altura*largura;
+        double ptosPreto = 0;
+        double densidade;
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r == 0 && g == 0 && b == 0){
+                    ptosPreto++;
+                }
+                
+            }
+        }
+        densidade=(ptosPreto/nunPixel) * 100;
+        System.out.println("Densidade Resultado: ");
         System.out.println("Pontos Pretos: "+ ptosPreto);
         System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
         System.out.println("Densidade "+ densidade + "%");
