@@ -21,7 +21,7 @@ public class Img {
     private int altura;
     int[][][] matriz;
     /**
-     * Usado onde é bescessário usar uma máscara
+     * Usado onde Ã© bescessÃ¡rio usar uma mÃ¡scara
      */
     int[][][] matrizResultado;
 
@@ -123,7 +123,7 @@ public class Img {
     
     /**
      * Deixa a matriz original e altera a matrizResultado
-     * N�O SERVE PARA TRANSFORMAR A IMAGEM EM PRETRO E BRANCO PARA SER USADO EM OUTRA FUN��O PARA ISSO USE cinza()
+     * NÃO SERVE PARA TRANSFORMAR A IMAGEM EM PRETRO E BRANCO PARA SER USADO EM OUTRA FUNÇÂO PARA ISSO USE cinza()
      */
     public void cinzaResultado(){
         for (int linha = 0; linha < altura; linha++) {
@@ -143,7 +143,7 @@ public class Img {
     }
     
     /**
-     * Filtro Passa Baixa (Diminuição de ruido) usar com tons de cinza.
+     * Filtro Passa Baixa (DiminuiÃ§Ã£o de ruido) usar com tons de cinza.
      * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
      * (L  , C-1)   (L  , C  )  (L  , C+1)
      * (L+1, C-1)   (L+1, C  )  (L+1, C+1)
@@ -167,7 +167,7 @@ public class Img {
     }
     
     /**
-     * Filtro Passa Baixa (Diminuição de ruido) usar com tons de cinza.
+     * Filtro Passa Baixa (DiminuiÃ§Ã£o de ruido) usar com tons de cinza.
      * Mediana ordena e pega o do meio.
      * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
      * (L  , C-1)   (L  , C  )  (L  , C+1)
@@ -266,7 +266,7 @@ public class Img {
     }
     
     /**
-     * Feito por diversao o professsor n�o fez na aula mas pediu para fazer :)
+     * Feito por diversao o professsor nï¿½o fez na aula mas pediu para fazer :)
      * @param valor
      */
     public void contraste(double valor){
@@ -317,7 +317,7 @@ public class Img {
     }
     
     
-    //Binarização usar com tons de cinza
+    //BinarizaÃ§Ã£o usar com tons de cinza
     public void limiar_threshould(int limiar){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -368,7 +368,7 @@ public class Img {
         }
     }
     
-    //nescessário usar a binarização
+    //nescessÃ¡rio usar a binarizaÃ§Ã£o
     public void densidade(){
         double nunPixel = altura*largura;
         double ptosPreto = 0;
@@ -388,7 +388,7 @@ public class Img {
         densidade=(ptosPreto/nunPixel) * 100;
         System.out.println("Densidade: ");
         System.out.println("Pontos Pretos: "+ ptosPreto);
-        System.out.println("Número de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
+        System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
         System.out.println("Densidade "+ densidade + "%");
    }
     
@@ -411,7 +411,7 @@ public class Img {
         densidade=(ptosPreto/nunPixel) * 100;
         System.out.println("Densidade Resultado: ");
         System.out.println("Pontos Pretos: "+ ptosPreto);
-        System.out.println("Número de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
+        System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
         System.out.println("Densidade "+ densidade + "%");
    }
     
@@ -425,7 +425,10 @@ public class Img {
     }
     
     public int retornaMediana(List<Integer> lista){
+      //Ordena a lista
     	Collections.sort(lista);
+      //Pega o tamanho da lista soma 1 e divide por 2 para pegar o indice da mediana
+      //Exemplo o tamanho da lista é 9 soma 1 da 10 e divide por 2 igual a 5 que é a mediana
     	return lista.get((lista.size()+1)/2);
     }
    
