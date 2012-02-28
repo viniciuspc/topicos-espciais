@@ -9,7 +9,7 @@ public class Imagem {
         System.out.println();
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        i.lerArquivo("imagem.jpg");
+        i.lerArquivo("carro.jpg");
         //Fara modificacoes
         //Soma os ponstos e tira a media 
         i.cinza();
@@ -17,10 +17,11 @@ public class Imagem {
         //i.brilho(80);
         //i.contraste(3);
         //i.negativo();
-        i.limiar_threshould(127);
+        //i.limiar_threshould(127);
         //i.limiar_threshould_inverso(127);
-       // i.media();
-        i.mediana();
+        //i.media();
+        //i.mediana();
+        i.sobel();
         i.densidade();
         i.densidadeResultado();
         //Da matriz para o buffer
