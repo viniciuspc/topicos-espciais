@@ -231,6 +231,37 @@ public class Img {
     public void metodoX(){
         
     }
+    public void sobel(){
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                
+                int sobelVertical = (-1*(matriz[coluna-1][linha-1][0])+(-2*matriz[coluna][linha-1][0])+(-1*matriz[coluna+1][linha-1][0])
+                    		+(0*matriz[coluna-1][linha][0])+(0*matriz[coluna][linha][0])+(0*matriz[coluna+1][linha][0])
+                    		+(1*matriz[coluna-1][linha+1][0])+(2*matriz[coluna][linha+1][0])+(1*matriz[coluna+1][linha+1][0]));
+                sobelVertical = sobelVertical*sobelVertical;
+                
+                int sobelHorizontal = (-1*(matriz[coluna-1][linha-1][0])+(0*matriz[coluna][linha-1][0])+(1*matriz[coluna+1][linha-1][0])
+                    		+(-2*matriz[coluna-1][linha][0])+(0*matriz[coluna][linha][0])+(2*matriz[coluna+1][linha][0])
+                    		+(-1*matriz[coluna-1][linha+1][0])+(0*matriz[coluna][linha+1][0])+(1*matriz[coluna+1][linha+1][0]));
+                
+                sobelHorizontal = sobelHorizontal*sobelHorizontal;
+                
+                //Soma
+                int ponto = (int) Math.sqrt(sobelHorizontal+sobelVertical);
+                
+                //limita
+                ponto = limitar(ponto);
+                
+                //deve estar em tons de cinza
+                matrizResultado[coluna][linha][0] = ponto;
+
+                matrizResultado[coluna][linha][1] = ponto;
+
+                matrizResultado[coluna][linha][2] = ponto;
+            }
+        }
+    }
     
     public void brilho(Integer valor){
         for (int linha = 0; linha < altura; linha++) {
@@ -430,6 +461,16 @@ public class Img {
       //Pega o tamanho da lista soma 1 e divide por 2 para pegar o indice da mediana
       //Exemplo o tamanho da lista é 9 soma 1 da 10 e divide por 2 igual a 5 que é a mediana
     	return lista.get((lista.size()+1)/2);
+    }
+    
+    public int limitar(int x){
+        if(x > 255)
+            return 255;
+        else 
+            if(x<0)
+                return 0;
+            else
+                return x;
     }
    
     public BufferedImage getImagem() {
