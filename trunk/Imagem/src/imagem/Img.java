@@ -295,6 +295,128 @@ public class Img {
         }
     }
     
+    /**
+     * -1   -1  -1
+     * -1   8   -1
+     * -1   -1  -1
+     */
+    public void laplaciano_8(){
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                      
+                //Soma
+                int ponto = (-1*(matriz[coluna-1][linha-1][0])+(-1*matriz[coluna][linha-1][0])+(-1*matriz[coluna+1][linha-1][0])
+                            +(-1*matriz[coluna-1][linha][0])+(8*matriz[coluna][linha][0])+(-1*matriz[coluna+1][linha][0])
+                            +(-1*matriz[coluna-1][linha+1][0])+(-1*matriz[coluna][linha+1][0])+(-1*matriz[coluna+1][linha+1][0]));
+                
+                //limita
+                ponto = limitar(ponto);
+                
+                //deve estar em tons de cinza
+                matrizResultado[coluna][linha][0] = ponto;
+
+                matrizResultado[coluna][linha][1] = ponto;
+
+                matrizResultado[coluna][linha][2] = ponto;
+            }
+        }
+    }
+    
+    /**
+     * 1   1  1
+     * 1   -8   1
+     * 1   1  1
+     */
+    public void laplaciano_menos_8(){
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                      
+                //Soma
+                int ponto = (-1*(matriz[coluna-1][linha-1][0])+(-1*matriz[coluna][linha-1][0])+(-1*matriz[coluna+1][linha-1][0])
+                            +(-1*matriz[coluna-1][linha][0])+(8*matriz[coluna][linha][0])+(-1*matriz[coluna+1][linha][0])
+                            +(-1*matriz[coluna-1][linha+1][0])+(-1*matriz[coluna][linha+1][0])+(-1*matriz[coluna+1][linha+1][0]));
+                
+                //limita
+                ponto = limitar(ponto);
+                
+                //deve estar em tons de cinza
+                matrizResultado[coluna][linha][0] = ponto;
+
+                matrizResultado[coluna][linha][1] = ponto;
+
+                matrizResultado[coluna][linha][2] = ponto;
+            }
+        }
+    }
+    
+    
+    
+    /**
+     * 0   -1  0
+     * -1   4   -1
+     * 0   -1  0
+     */
+    public void laplaciano_4(){
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                      
+                //Soma
+                int ponto = (0*(matriz[coluna-1][linha-1][0])+(-1*matriz[coluna][linha-1][0])+(0*matriz[coluna+1][linha-1][0])
+                            +(-1*matriz[coluna-1][linha][0])+(4*matriz[coluna][linha][0])+(-1*matriz[coluna+1][linha][0])
+                            +(0*matriz[coluna-1][linha+1][0])+(-1*matriz[coluna][linha+1][0])+(0*matriz[coluna+1][linha+1][0]));
+                
+                //limita
+                ponto = limitar(ponto);
+                
+                //deve estar em tons de cinza
+                matrizResultado[coluna][linha][0] = ponto;
+
+                matrizResultado[coluna][linha][1] = ponto;
+
+                matrizResultado[coluna][linha][2] = ponto;
+            }
+        }
+    }
+    
+    /**
+     * 0   1  0
+     * 1   -4   1
+     * 0   1  0
+     */
+    public void laplaciano_menos_4(){
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                      
+                //Soma
+                int ponto = (0*(matriz[coluna-1][linha-1][0])+(1*matriz[coluna][linha-1][0])+(0*matriz[coluna+1][linha-1][0])
+                            +(1*matriz[coluna-1][linha][0])+(-4*matriz[coluna][linha][0])+(1*matriz[coluna+1][linha][0])
+                            +(0*matriz[coluna-1][linha+1][0])+(1*matriz[coluna][linha+1][0])+(0*matriz[coluna+1][linha+1][0]));
+                
+                //limita
+                ponto = limitar(ponto);
+                
+                //deve estar em tons de cinza
+                matrizResultado[coluna][linha][0] = ponto;
+
+                matrizResultado[coluna][linha][1] = ponto;
+
+                matrizResultado[coluna][linha][2] = ponto;
+            }
+        }
+    }
+    
+    public void dilataco(){
+        
+    }
+    
+    public void erosao(){
+        
+    }
+    
     public void brilho(Integer valor){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -375,6 +497,20 @@ public class Img {
                 matriz[coluna][linha][0] = r;
                 matriz[coluna][linha][1] = g;
                 matriz[coluna][linha][2] = b;
+            }
+        }
+    }
+    
+    public void negativoResultado(){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = 255-matrizResultado[coluna][linha][0];
+                int g = 255-matrizResultado[coluna][linha][1];
+                int b = 255-matrizResultado[coluna][linha][2];
+                
+                matrizResultado[coluna][linha][0] = r;
+                matrizResultado[coluna][linha][1] = g;
+                matrizResultado[coluna][linha][2] = b;
             }
         }
     }
@@ -504,8 +640,8 @@ public class Img {
    }
     
     
-    public void salvar(BufferedImage imagem) throws IOException{
-    	File imgSalva = new File("salvo.jpg");
+    public void salvar(BufferedImage imagem, String nome) throws IOException{
+    	File imgSalva = new File(nome+".jpg");
     	ImageIO.write(imagem, "jpg", imgSalva);
     	System.out.println(imgSalva.getAbsolutePath());
     	

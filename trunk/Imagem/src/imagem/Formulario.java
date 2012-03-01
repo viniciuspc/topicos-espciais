@@ -46,9 +46,9 @@ public class Formulario {
         this.imagem = imagem;
     }
 
-	public void setImagemResultado(BufferedImage imagemResultado) {
-		this.imagemResultado = imagemResultado;
-	}
+    public void setImagemResultado(BufferedImage imagemResultado) {
+            this.imagemResultado = imagemResultado;
+    }
     
     
 
