@@ -9,7 +9,7 @@ public class Imagem {
         System.out.println();
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        i.lerArquivo("carro.jpg");
+        i.lerArquivo("carro_menos_8.jpg");
         //Fara modificacoes
         //Soma os ponstos e tira a media 
         i.cinza();
@@ -22,14 +22,18 @@ public class Imagem {
         //i.media();
         //i.mediana();
         //i.sobel();
-        i.prewitt();
-        //i.limiar_threshould_resultado(127);
+        //i.prewitt();
+        //i.laplaciano_8();
+        i.laplaciano_menos_8();
+        //i.laplaciano_4();
+        //i.laplaciano_menos_4();
+        i.limiar_threshould_resultado(127);
         i.densidade();
         i.densidadeResultado();
         //Da matriz para o buffer
         i.lerMatriz();
         i.lerMatrizResultado();
-        //i.salvar(i.getImagem());
+        //i.salvar(i.getImagemResultado(), "carro_menos_8");
 
         Formulario f = new Formulario();
         f.setImagem(i.getImagem());
