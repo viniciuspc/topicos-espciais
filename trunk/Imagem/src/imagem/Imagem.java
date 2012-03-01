@@ -21,7 +21,9 @@ public class Imagem {
         //i.limiar_threshould_inverso(127);
         //i.media();
         //i.mediana();
-        i.sobel();
+        //i.sobel();
+        i.prewitt();
+        //i.limiar_threshould_resultado(127);
         i.densidade();
         i.densidadeResultado();
         //Da matriz para o buffer

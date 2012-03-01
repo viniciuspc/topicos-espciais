@@ -263,6 +263,38 @@ public class Img {
         }
     }
     
+    public void prewitt(){
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                
+                int sobelVertical = (-1*(matriz[coluna-1][linha-1][0])+(-1*matriz[coluna][linha-1][0])+(-1*matriz[coluna+1][linha-1][0])
+                    		+(0*matriz[coluna-1][linha][0])+(0*matriz[coluna][linha][0])+(0*matriz[coluna+1][linha][0])
+                    		+(1*matriz[coluna-1][linha+1][0])+(1*matriz[coluna][linha+1][0])+(1*matriz[coluna+1][linha+1][0]));
+                sobelVertical = sobelVertical*sobelVertical;
+                
+                int sobelHorizontal = (-1*(matriz[coluna-1][linha-1][0])+(0*matriz[coluna][linha-1][0])+(1*matriz[coluna+1][linha-1][0])
+                    		+(-1*matriz[coluna-1][linha][0])+(0*matriz[coluna][linha][0])+(1*matriz[coluna+1][linha][0])
+                    		+(-1*matriz[coluna-1][linha+1][0])+(0*matriz[coluna][linha+1][0])+(1*matriz[coluna+1][linha+1][0]));
+                
+                sobelHorizontal = sobelHorizontal*sobelHorizontal;
+                
+                //Soma
+                int ponto = (int) Math.sqrt(sobelHorizontal+sobelVertical);
+                
+                //limita
+                ponto = limitar(ponto);
+                
+                //deve estar em tons de cinza
+                matrizResultado[coluna][linha][0] = ponto;
+
+                matrizResultado[coluna][linha][1] = ponto;
+
+                matrizResultado[coluna][linha][2] = ponto;
+            }
+        }
+    }
+    
     public void brilho(Integer valor){
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -370,6 +402,31 @@ public class Img {
                     matriz[coluna][linha][2] = 255;
                 else
                     matriz[coluna][linha][2] = 0;
+            }
+        }
+    }
+    
+    public void limiar_threshould_resultado(int limiar){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matrizResultado[coluna][linha][0];
+                int g = matrizResultado[coluna][linha][1];
+                int b = matrizResultado[coluna][linha][2];
+                
+                if(r > limiar)
+                    matrizResultado[coluna][linha][0] = 255;
+                else
+                    matrizResultado[coluna][linha][0] = 0;
+                
+                if(g > limiar)
+                    matrizResultado[coluna][linha][1] = 255;
+                else
+                    matrizResultado[coluna][linha][1] = 0;
+                
+                if(b > limiar)
+                    matrizResultado[coluna][linha][2] = 255;
+                else
+                    matrizResultado[coluna][linha][2] = 0;
             }
         }
     }
