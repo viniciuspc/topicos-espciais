@@ -19,15 +19,16 @@ public class Imagem {
         //i.negativo();
         //i.limiar_threshould(127);
         //i.limiar_threshould_inverso(127);
-        //i.media();
+        i.media();
         //i.mediana();
         //i.sobel();
         //i.prewitt();
         //i.laplaciano_8();
-        i.laplaciano_menos_8();
+        //i.laplaciano_menos_8();
         //i.laplaciano_4();
         //i.laplaciano_menos_4();
-        i.limiar_threshould_resultado(127);
+        i.limiar_threshould_resultado(70);
+        i.negativoResultado();
         i.densidade();
         i.densidadeResultado();
         //Da matriz para o buffer
