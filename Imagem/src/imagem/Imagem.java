@@ -9,10 +9,10 @@ public class Imagem {
         System.out.println();
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        i.lerArquivo("carro_menos_8_dilatacao.jpg");
+        i.lerArquivo("imagem3_prewitt.jpg");
         //Fara modificacoes
         //Soma os ponstos e tira a media 
-        //i.cinza();
+        i.cinza();
         //i.cinzaResultado();
         //i.brilho(80);
         //i.contraste(3);
@@ -29,8 +29,8 @@ public class Imagem {
         //i.laplaciano_menos_4();
         //i.limiar_threshould_resultado(100);
         
-        i.erosao();
-        //i.dilataco();
+        //i.erosao();
+        i.dilataco();
 
         
         //i.negativoResultado();
@@ -39,7 +39,7 @@ public class Imagem {
         //Da matriz para o buffer
         i.lerMatriz();
         i.lerMatrizResultado();
-        //i.salvar(i.getImagemResultado(), "carro_menos_8_dilatacao");
+        //i.salvar(i.getImagemResultado(), "imagem3_prewitt");
 
         Formulario f = new Formulario();
         f.setImagem(i.getImagem());
