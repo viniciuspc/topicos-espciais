@@ -221,6 +221,31 @@ public class Img {
     	
     }
     
+    public void fpbMaior(){
+        int maior = 0;
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                for(int l = 0; l < 3; l++){
+                    for(int c = 0; c < 3; c++){
+                        if(matriz[coluna-(c-1)][linha-(l-1)][0] > maior)
+                            maior = matriz[coluna-(c-1)][linha-(l-1)][0];
+                    }
+                }
+                matrizResultado[coluna][linha][0] = maior;
+
+                matrizResultado[coluna][linha][1] = maior;
+
+                matrizResultado[coluna][linha][2] = maior;  
+                maior = 0;
+                        
+            }
+        }
+    }
+    
+    public void fpbMenor(){
+        
+    }
+    
     public void sobel(){
         
         for (int linha = 1; linha < altura-2; linha++) {
@@ -401,10 +426,10 @@ public class Img {
     
     /**
      * USAR IMAGEM BINARIZADA
-     * Preto é fundo e Branco é o objeto
+     * Preto - fundo e Branco - o objeto
      * O pixel do objeto continuado sendo do objeto se algum dos pixels envolta forem do objeto.
      */
-    public void dilataco(){
+    public void dilataco_pixel(){
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
     	for (int linha = 1; linha < altura-2; linha++) {
@@ -414,23 +439,67 @@ public class Img {
         		|| matriz[coluna-1][linha+1][0] == COR_OBJETO || matriz[coluna][linha+1][0] == COR_OBJETO || matriz[coluna+1][linha+1][0] == COR_OBJETO
         		){
         			matrizResultado[coluna][linha][0] = COR_OBJETO;
-                    matrizResultado[coluna][linha][1] = COR_OBJETO;
-                    matrizResultado[coluna][linha][2] = COR_OBJETO;
+                                matrizResultado[coluna][linha][1] = COR_OBJETO;
+                                matrizResultado[coluna][linha][2] = COR_OBJETO;
         		} else {
         			matrizResultado[coluna][linha][0] = COR_FUNDO;
-                    matrizResultado[coluna][linha][1] = COR_FUNDO;
-                    matrizResultado[coluna][linha][2] = COR_FUNDO;
+                                matrizResultado[coluna][linha][1] = COR_FUNDO;
+                                matrizResultado[coluna][linha][2] = COR_FUNDO;
         		}
+            }
+        }
+    }
+    
+    public void dilataco(){
+    	final int COR_OBJETO = 255;
+    	final int COR_FUNDO = 0;
+    	for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                if(matriz[coluna][linha][0] == COR_OBJETO){
+                    matrizResultado[coluna-1][linha-1][0] = COR_OBJETO; matrizResultado[coluna][linha-1][0] = COR_OBJETO; matrizResultado[coluna+1][linha-1][0] = COR_OBJETO;
+                    matrizResultado[coluna-1][linha][0] = COR_OBJETO; matrizResultado[coluna][linha][0] = COR_OBJETO; matrizResultado[coluna+1][linha][0] = COR_OBJETO;
+                    matrizResultado[coluna-1][linha+1][0] = COR_OBJETO; matrizResultado[coluna][linha+1][0] = COR_OBJETO; matrizResultado[coluna+1][linha+1][0] = COR_OBJETO;
+                    
+                    matrizResultado[coluna-1][linha-1][1] = COR_OBJETO; matrizResultado[coluna][linha-1][1] = COR_OBJETO; matrizResultado[coluna+1][linha-1][1] = COR_OBJETO;
+                    matrizResultado[coluna-1][linha][1] = COR_OBJETO; matrizResultado[coluna][linha][1] = COR_OBJETO; matrizResultado[coluna+1][linha][1] = COR_OBJETO;
+                    matrizResultado[coluna-1][linha+1][1] = COR_OBJETO; matrizResultado[coluna][linha+1][1] = COR_OBJETO; matrizResultado[coluna+1][linha+1][1] = COR_OBJETO;
+                    
+                    matrizResultado[coluna-1][linha-1][2] = COR_OBJETO; matrizResultado[coluna][linha-1][2] = COR_OBJETO; matrizResultado[coluna+1][linha-1][2] = COR_OBJETO;
+                    matrizResultado[coluna-1][linha][2] = COR_OBJETO; matrizResultado[coluna][linha][2] = COR_OBJETO; matrizResultado[coluna+1][linha][2] = COR_OBJETO;
+                    matrizResultado[coluna-1][linha+1][2] = COR_OBJETO; matrizResultado[coluna][linha+1][2] = COR_OBJETO; matrizResultado[coluna+1][linha+1][2] = COR_OBJETO;
+                }
+            }
+        }
+    }
+    
+    public void erosao(){
+    	final int COR_OBJETO = 255;
+    	final int COR_FUNDO = 0;
+    	for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                if(matriz[coluna][linha][0] == COR_FUNDO){
+                    matrizResultado[coluna-1][linha-1][0] = COR_FUNDO; matrizResultado[coluna][linha-1][0] = COR_FUNDO; matrizResultado[coluna+1][linha-1][0] = COR_FUNDO;
+                    matrizResultado[coluna-1][linha][0] = COR_FUNDO; matrizResultado[coluna][linha][0] = COR_FUNDO; matrizResultado[coluna+1][linha][0] = COR_FUNDO;
+                    matrizResultado[coluna-1][linha+1][0] = COR_FUNDO; matrizResultado[coluna][linha+1][0] = COR_FUNDO; matrizResultado[coluna+1][linha+1][0] = COR_FUNDO;
+                    
+                    matrizResultado[coluna-1][linha-1][1] = COR_FUNDO; matrizResultado[coluna][linha-1][1] = COR_FUNDO; matrizResultado[coluna+1][linha-1][1] = COR_FUNDO;
+                    matrizResultado[coluna-1][linha][1] = COR_FUNDO; matrizResultado[coluna][linha][1] = COR_FUNDO; matrizResultado[coluna+1][linha][1] = COR_FUNDO;
+                    matrizResultado[coluna-1][linha+1][1] = COR_FUNDO; matrizResultado[coluna][linha+1][1] = COR_FUNDO; matrizResultado[coluna+1][linha+1][1] = COR_FUNDO;
+                    
+                    matrizResultado[coluna-1][linha-1][2] = COR_FUNDO; matrizResultado[coluna][linha-1][2] = COR_FUNDO; matrizResultado[coluna+1][linha-1][2] = COR_FUNDO;
+                    matrizResultado[coluna-1][linha][2] = COR_FUNDO; matrizResultado[coluna][linha][2] = COR_FUNDO; matrizResultado[coluna+1][linha][2] = COR_FUNDO;
+                    matrizResultado[coluna-1][linha+1][2] = COR_FUNDO; matrizResultado[coluna][linha+1][2] = COR_FUNDO; matrizResultado[coluna+1][linha+1][2] = COR_FUNDO;
+                }
             }
         }
     }
     
     /**
      * USAR IMAGEM BINARIZADA
-     * Preto é fundo e Branco é o objeto
-     * O pixel do objeto continuado sendo do objeto só se todos os pixels envolta forem do objeto.
+     * Preto - fundo e Branco - o objeto
+     * O pixel do objeto continuado sendo do objeto se todos os pixels envolta forem do objeto.
      */
-    public void erosao(){
+    public void erosao_pixel(){
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
     	for (int linha = 1; linha < altura-2; linha++) {
@@ -442,12 +511,12 @@ public class Img {
             		&& matriz[coluna-1][linha+1][0] == COR_OBJETO && matriz[coluna][linha+1][0] == COR_OBJETO && matriz[coluna+1][linha+1][0] == COR_OBJETO
             		){
             			matrizResultado[coluna][linha][0] = COR_OBJETO;
-                        matrizResultado[coluna][linha][1] = COR_OBJETO;
-                        matrizResultado[coluna][linha][2] = COR_OBJETO;
+                                matrizResultado[coluna][linha][1] = COR_OBJETO;
+                                matrizResultado[coluna][linha][2] = COR_OBJETO;
             		} else {
             			matrizResultado[coluna][linha][0] = COR_FUNDO;
-                        matrizResultado[coluna][linha][1] = COR_FUNDO;
-                        matrizResultado[coluna][linha][2] = COR_FUNDO;
+                                matrizResultado[coluna][linha][1] = COR_FUNDO;
+                                matrizResultado[coluna][linha][2] = COR_FUNDO;
             		}
             	}
             }
