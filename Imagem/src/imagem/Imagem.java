@@ -9,10 +9,10 @@ public class Imagem {
         System.out.println();
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        i.lerArquivo("imagem3_prewitt.jpg");
+        i.lerArquivo("carro_menos_8.jpg");
         //Fara modificacoes
         //Soma os ponstos e tira a media 
-        i.cinza();
+        //i.cinza();
         //i.cinzaResultado();
         //i.brilho(80);
         //i.contraste(3);
@@ -29,8 +29,10 @@ public class Imagem {
         //i.laplaciano_menos_4();
         //i.limiar_threshould_resultado(100);
         
-        //i.erosao();
-        i.dilataco();
+        i.erosao();
+        //i.dilataco();
+        
+        //i.fpbMaior();
 
         
         //i.negativoResultado();
