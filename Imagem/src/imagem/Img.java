@@ -5,111 +5,95 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author Vinicius
+ *
+ */
 public class Img {
 
-    private BufferedImage imagem;
-    private BufferedImage imagemResultado;
-    private int largura;
-    private int altura;
-    int[][][] matriz;
+	private int largura;
+	private int altura;
+	
+	/**
+	 * 
+	 * @param imagem
+	 * @return
+	 */
+    public int[][][]  lerArquivo(BufferedImage imagem) {
+    	int[][][] matriz;
+        largura = imagem.getWidth();
+        altura = imagem.getHeight();
+        matriz = new int[largura][altura][3];
+        /*
+         * Percore a matriz de cima para baixo da esquerda para a direita
+         */
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                Color pixel = new Color(imagem.getRGB(coluna, linha));
+                matriz[coluna][linha][0] = pixel.getRed();
+                matriz[coluna][linha][1] = pixel.getGreen();
+                matriz[coluna][linha][2] = pixel.getBlue();
+            }
+        }
+        return matriz;
+        
+    }
     /**
-     * Usado onde Ã© bescessÃ¡rio usar uma mÃ¡scara
+     * 
+     * @param matriz
+     * @param imagem
      */
-    int[][][] matrizResultado;
-
-    public void lerArquivo(String arquivo) {
-        try {
-            imagem = ImageIO.read(new File(arquivo));
-            imagemResultado = ImageIO.read(new File(arquivo));
-            largura = getImagem().getWidth();
-            altura = getImagem().getHeight();
-            matriz = new int[largura][altura][3];
-            matrizResultado = new int[largura][altura][3];
-            /*
-             * Percore a matriz de cima para baixo da esquerda para a direita
-             */
-            for (int linha = 0; linha < altura; linha++) {
-                for (int coluna = 0; coluna < largura; coluna++) {
-                    Color pixel = new Color(getImagem().getRGB(coluna, linha));
-                    matriz[coluna][linha][0] = pixel.getRed();
-                    matrizResultado[coluna][linha][0] = pixel.getRed();
-                    matriz[coluna][linha][1] = pixel.getGreen();
-                    matrizResultado[coluna][linha][1] = pixel.getGreen();
-                    matriz[coluna][linha][2] = pixel.getBlue();
-                    matrizResultado[coluna][linha][2] = pixel.getBlue();
-                }
-            }
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Img.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void lerMatriz() {
+    public void lerMatriz(int[][][] matriz, BufferedImage imagem) {
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 int r = matriz[coluna][linha][0];
                 int g = matriz[coluna][linha][1];
                 int b = matriz[coluna][linha][2];
                 Color pixel = new Color(r, g, b);
-                getImagem().setRGB(coluna, linha, pixel.getRGB());
+                imagem.setRGB(coluna, linha, pixel.getRGB());
             }
         }
     }
-    
-    public void lerMatrizResultado() {
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matrizResultado[coluna][linha][0];
-                int g = matrizResultado[coluna][linha][1];
-                int b = matrizResultado[coluna][linha][2];
-                Color pixel = new Color(r, g, b);
-                getImagemResultado().setRGB(coluna, linha, pixel.getRGB());
-            }
-        }
-    }
-    
-    public void lerMatrizCinza() {
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][0];
-                int b = matriz[coluna][linha][0];
-                Color pixel = new Color(r, g, b);
-                getImagem().setRGB(coluna, linha, pixel.getRGB());
-            }
-        }
-    }
-    
-    public void azul() {
+    /**
+     * 
+     * @param matrizOriginal
+     * @param matriz
+     * @param imagem
+     */
+    public void azul(int[][][] matrizOriginal, int[][][] matriz, BufferedImage imagem) {
+    	if(matrizOriginal == matriz)
+    		matrizOriginal = matriz.clone();
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 int r = matriz[coluna][linha][0];
                 int g = matriz[coluna][linha][1];
                 int b = matriz[coluna][linha][2];
-                Color pixel = new Color(r, g, b);
-                getImagem().setRGB(coluna, linha, pixel.getRGB());
+                Color pixel = new Color(0, 0, b);
+                imagem.setRGB(coluna, linha, pixel.getRGB());
             }
         }
     }
     
     /**
-     * Altera a matriz original
+     * 
+     * @param matrizOriginal
+     * @param matriz
      */
-    public void cinza(){
+    public void cinza(int[][][] matrizOriginal, int[][][] matriz){
+    	
+    	if(matrizOriginal == matriz)
+    		matrizOriginal = matriz.clone();
+    	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][1];
-                int b = matriz[coluna][linha][2];
+                int r = matrizOriginal[coluna][linha][0];
+                int g = matrizOriginal[coluna][linha][1];
+                int b = matrizOriginal[coluna][linha][2];
                 //tons de cinza
                // int cinza = (r + g + b)/3;
                 int cinza = (int) (r*0.3+g*0.59+b*0.11);
@@ -120,35 +104,217 @@ public class Img {
             }
         }
     }
-    
     /**
-     * Deixa a matriz original e altera a matrizResultado
-     * NÃO SERVE PARA TRANSFORMAR A IMAGEM EM PRETRO E BRANCO PARA SER USADO EM OUTRA FUNÇÂO PARA ISSO USE cinza()
+     * 
+     * @param valor
+     * @param matrizOriginal
+     * @param matriz
      */
-    public void cinzaResultado(){
+    public void brilho(Integer valor, int[][][] matrizOriginal, int[][][] matriz){
+    	
+    	if(matrizOriginal == matriz)
+    		matrizOriginal = matriz.clone();
+    	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][1];
-                int b = matriz[coluna][linha][2];
-                //tons de cinza
-               // int cinza = (r + g + b)/3;
-                int cinza = (int) (r*0.3+g*0.59+b*0.11);
+                int r = matrizOriginal[coluna][linha][0] + valor;
+                int g = matrizOriginal[coluna][linha][1] + valor;
+                int b = matrizOriginal[coluna][linha][2] + valor;
+                
                 //seta os tons de cinza na matriz
-                matrizResultado[coluna][linha][0] = cinza;
-                matrizResultado[coluna][linha][1] = cinza;
-                matrizResultado[coluna][linha][2] = cinza;
+                if(r > 255)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    if(r<0)
+                        matriz[coluna][linha][0] = 0;
+                    else
+                        matriz[coluna][linha][0] = r;
+                if(g > 255)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    if(g<0)
+                        matriz[coluna][linha][1] = 0;
+                    else
+                        matriz[coluna][linha][1] = g;
+                if(b > 255)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    if(b<0)
+                        matriz[coluna][linha][2] = 0;
+                    else
+                        matriz[coluna][linha][2] = b;
             }
         }
     }
     
     /**
+     * 
+     * @param valor
+     * @param matrizOriginal
+     * @param matriz
+     */
+    public void contraste(double valor, int[][][] matrizOriginal, int[][][] matriz){
+    	if(matrizOriginal == matriz)
+    		matrizOriginal = matriz.clone();
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                double r = matrizOriginal[coluna][linha][0] * (valor);
+                double g = matrizOriginal[coluna][linha][1] * (valor);
+                double b = matrizOriginal[coluna][linha][2] * (valor);
+                
+                //seta os tons de cinza na matriz
+                if(r > 255)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    if(r<0)
+                        matriz[coluna][linha][0] = 0;
+                    else
+                        matriz[coluna][linha][0] = (int) r;
+                if(g > 255)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    if(g<0)
+                        matriz[coluna][linha][1] = 0;
+                    else
+                        matriz[coluna][linha][1] = (int) g;
+                if(b > 255)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    if(b<0)
+                        matriz[coluna][linha][2] = 0;
+                    else
+                        matriz[coluna][linha][2] = (int) b;
+            }
+        }
+    }
+    /**
+     * 
+     * @param matrizOriginal
+     * @param matriz
+     */
+    public void negativo(int[][][] matrizOriginal, int[][][] matriz){
+    	if(matrizOriginal == matriz)
+    		matrizOriginal = matriz.clone();
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = 255-matrizOriginal[coluna][linha][0];
+                int g = 255-matrizOriginal[coluna][linha][1];
+                int b = 255-matrizOriginal[coluna][linha][2];
+                
+                matriz[coluna][linha][0] = r;
+                matriz[coluna][linha][1] = g;
+                matriz[coluna][linha][2] = b;
+            }
+        }
+    }
+    
+    /**
+     * Binarizacao usar com tons de cinza
+     * @param limiar
+     * @param matrizOriginal
+     * @param matriz
+     * 
+     */
+    public void limiar_threshould(int limiar, int[][][] matrizOriginal, int[][][] matriz){
+    	if(matrizOriginal == matriz)
+    		matrizOriginal = matriz.clone();
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r > limiar)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    matriz[coluna][linha][0] = 0;
+                
+                if(g > limiar)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    matriz[coluna][linha][1] = 0;
+                
+                if(b > limiar)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    matriz[coluna][linha][2] = 0;
+            }
+        }
+    }
+    
+    /**
+     * 
+     * @param limiar
+     * @param matrizOriginal
+     * @param matriz
+     */
+    public void limiar_threshould_inverso(int limiar, int[][][] matrizOriginal, int[][][] matriz){
+    	if(matrizOriginal == matriz)
+    		matrizOriginal = matriz.clone();
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r < limiar)
+                    matriz[coluna][linha][0] = 255;
+                else
+                    matriz[coluna][linha][0] = 0;
+                
+                if(g < limiar)
+                    matriz[coluna][linha][1] = 255;
+                else
+                    matriz[coluna][linha][1] = 0;
+                
+                if(b < limiar)
+                    matriz[coluna][linha][2] = 255;
+                else
+                    matriz[coluna][linha][2] = 0;
+            }
+        }
+    }
+    
+    /**
+     * nescessario usar a binarizacao
+     * @param matriz
+     */
+    public void densidade(int[][][] matriz){
+        double nunPixel = altura*largura;
+        double ptosPreto = 0;
+        double densidade;
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r == 0 && g == 0 && b == 0){
+                    ptosPreto++;
+                }
+                
+            }
+        }
+        densidade=(ptosPreto/nunPixel) * 100;
+        System.out.println("Densidade: ");
+        System.out.println("Pontos Pretos: "+ ptosPreto);
+        System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
+        System.out.println("Densidade "+ densidade + "%");
+   }
+
+    /**
+     * 
      * Filtro Passa Baixa (DiminuiÃ§Ã£o de ruido) usar com tons de cinza.
      * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
      * (L  , C-1)   (L  , C  )  (L  , C+1)
      * (L+1, C-1)   (L+1, C  )  (L+1, C+1)
-     **/
-    public void media(){
+     *
+      * @param matriz
+      * @param matrizResultado
+      */
+    public void media(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                 	matrizResultado[coluna][linha][0] = (matriz[coluna-1][linha-1][0]+matriz[coluna][linha-1][0]+matriz[coluna+1][linha-1][0]
@@ -172,8 +338,13 @@ public class Img {
      * (L-1, C-1)   (L-1, C  )  (L-1, C+1)
      * (L  , C-1)   (L  , C  )  (L  , C+1)
      * (L+1, C-1)   (L+1, C  )  (L+1, C+1)
-     **/
-    public void mediana(){
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void mediana(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
     	List<Integer> lista = new ArrayList<Integer>();
     	for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -221,8 +392,15 @@ public class Img {
     	
     }
     
-    public void fpbMaior(){
-        int maior = 0;
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void fpbMaior(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	int maior = 0;
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                 for(int l = 0; l < 3; l++){
@@ -242,12 +420,43 @@ public class Img {
         }
     }
     
-    public void fpbMenor(){
-        
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void fpbMenor(int[][][] matriz, int[][][] matrizResultado){
+    	
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+            	int menor = matriz[coluna][linha][0];
+                for(int l = 0; l < 3; l++){
+                    for(int c = 0; c < 3; c++){
+                        if(matriz[coluna-(c-1)][linha-(l-1)][0] < menor)
+                        	menor = matriz[coluna-(c-1)][linha-(l-1)][0];
+                    }
+                }
+                matrizResultado[coluna][linha][0] = menor;
+
+                matrizResultado[coluna][linha][1] = menor;
+
+                matrizResultado[coluna][linha][2] = menor;  
+                        
+            }
+        }
+    	
+    	
     }
     
-    public void sobel(){
-        
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void sobel(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                 
@@ -278,8 +487,15 @@ public class Img {
         }
     }
     
-    public void prewitt(){
-        
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void prewitt(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                 
@@ -314,9 +530,14 @@ public class Img {
      * -1   -1  -1
      * -1   8   -1
      * -1   -1  -1
+     * 
+     * @param matriz
+     * @param matrizResultado
      */
-    public void laplaciano_8(){
-        
+    public void laplaciano_8(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                       
@@ -342,9 +563,14 @@ public class Img {
      * 1   1  1
      * 1   -8   1
      * 1   1  1
+     * 
+     * @param matriz
+     * @param matrizResultado
      */
-    public void laplaciano_menos_8(){
-        
+    public void laplaciano_menos_8(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                       
@@ -372,9 +598,15 @@ public class Img {
      * 0   -1  0
      * -1   4   -1
      * 0   -1  0
+     * 
+     * 
+     * @param matriz
+     * @param matrizResultado
      */
-    public void laplaciano_4(){
-        
+    public void laplaciano_4(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                       
@@ -400,9 +632,14 @@ public class Img {
      * 0   1  0
      * 1   -4   1
      * 0   1  0
+     * 
+     * @param matriz
+     * @param matrizResultado
      */
-    public void laplaciano_menos_4(){
-        
+    public void laplaciano_menos_4(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                       
@@ -428,8 +665,14 @@ public class Img {
      * USAR IMAGEM BINARIZADA
      * Preto - fundo e Branco - o objeto
      * O pixel do objeto continuado sendo do objeto se algum dos pixels envolta forem do objeto.
+     *
+     * @param matriz
+     * @param matrizResultado
      */
-    public void dilataco_pixel(){
+    public void dilatacao_pixel(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
     	for (int linha = 1; linha < altura-2; linha++) {
@@ -450,7 +693,17 @@ public class Img {
         }
     }
     
-    public void dilataco(){
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void dilatacao(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
+    		
+    	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
     	for (int linha = 1; linha < altura-2; linha++) {
@@ -472,7 +725,15 @@ public class Img {
         }
     }
     
-    public void erosao(){
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void erosao(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
+    	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
     	for (int linha = 1; linha < altura-2; linha++) {
@@ -498,8 +759,14 @@ public class Img {
      * USAR IMAGEM BINARIZADA
      * Preto - fundo e Branco - o objeto
      * O pixel do objeto continuado sendo do objeto se todos os pixels envolta forem do objeto.
+     * 
+     * @param matriz
+     * @param matrizResultado
      */
-    public void erosao_pixel(){
+    public void erosao_pixel(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz, matrizResultado);
+    	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
     	for (int linha = 1; linha < altura-2; linha++) {
@@ -523,229 +790,75 @@ public class Img {
         }
     }
     
-    public void brilho(Integer valor){
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0] + valor;
-                int g = matriz[coluna][linha][1] + valor;
-                int b = matriz[coluna][linha][2] + valor;
-                
-                //seta os tons de cinza na matriz
-                if(r > 255)
-                    matriz[coluna][linha][0] = 255;
-                else
-                    if(r<0)
-                        matriz[coluna][linha][0] = 0;
-                    else
-                        matriz[coluna][linha][0] = r;
-                if(g > 255)
-                    matriz[coluna][linha][1] = 255;
-                else
-                    if(g<0)
-                        matriz[coluna][linha][1] = 0;
-                    else
-                        matriz[coluna][linha][1] = g;
-                if(b > 255)
-                    matriz[coluna][linha][2] = 255;
-                else
-                    if(b<0)
-                        matriz[coluna][linha][2] = 0;
-                    else
-                        matriz[coluna][linha][2] = b;
-            }
-        }
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void abertura(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
+    	
+    	erosao(matriz, matrizResultado);
+    	int[][][] matrizAux = new int[largura][altura][3];
+    	copiar(matrizResultado, matrizAux);
+    	dilatacao(matrizResultado, matrizAux);
+    	copiar(matrizAux, matrizResultado);
     }
     
     /**
-     * Feito por diversao o professsor nï¿½o fez na aula mas pediu para fazer :)
-     * @param valor
+     * 
+     * @param matriz
+     * @param matrizResultado
      */
-    public void contraste(double valor){
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                double r = matriz[coluna][linha][0] * (valor);
-                double g = matriz[coluna][linha][1] * (valor);
-                double b = matriz[coluna][linha][2] * (valor);
-                
-                //seta os tons de cinza na matriz
-                if(r > 255)
-                    matriz[coluna][linha][0] = 255;
-                else
-                    if(r<0)
-                        matriz[coluna][linha][0] = 0;
-                    else
-                        matriz[coluna][linha][0] = (int) r;
-                if(g > 255)
-                    matriz[coluna][linha][1] = 255;
-                else
-                    if(g<0)
-                        matriz[coluna][linha][1] = 0;
-                    else
-                        matriz[coluna][linha][1] = (int) g;
-                if(b > 255)
-                    matriz[coluna][linha][2] = 255;
-                else
-                    if(b<0)
-                        matriz[coluna][linha][2] = 0;
-                    else
-                        matriz[coluna][linha][2] = (int) b;
-            }
-        }
+    public void fechamento(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
+    	
+    	dilatacao(matriz, matrizResultado);
+    	int[][][] matrizAux = new int[largura][altura][3];
+    	copiar(matrizResultado, matrizAux);
+    	erosao(matrizResultado, matrizAux);
+    	copiar(matrizAux, matrizResultado);
     }
     
-    public void negativo(){
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = 255-matriz[coluna][linha][0];
-                int g = 255-matriz[coluna][linha][1];
-                int b = 255-matriz[coluna][linha][2];
-                
-                matriz[coluna][linha][0] = r;
-                matriz[coluna][linha][1] = g;
-                matriz[coluna][linha][2] = b;
-            }
-        }
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void abertura_pixel(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz,matrizResultado);
+    	
+    	erosao_pixel(matriz, matrizResultado);
+    	int[][][] matrizAux = new int[largura][altura][3];
+    	copiar(matrizResultado, matrizAux);
+    	dilatacao_pixel(matrizAux, matrizResultado);
     }
     
-    public void negativoResultado(){
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = 255-matrizResultado[coluna][linha][0];
-                int g = 255-matrizResultado[coluna][linha][1];
-                int b = 255-matrizResultado[coluna][linha][2];
-                
-                matrizResultado[coluna][linha][0] = r;
-                matrizResultado[coluna][linha][1] = g;
-                matrizResultado[coluna][linha][2] = b;
-            }
-        }
+    /**
+     * 
+     * @param matriz
+     * @param matrizResultado
+     */
+    public void fechamento_pixel(int[][][] matriz, int[][][] matrizResultado){
+    	if(matriz == matrizResultado)
+    		copiar(matriz,matrizResultado);
+    	
+    	dilatacao_pixel(matriz, matrizResultado);
+    	int[][][] matrizAux = new int[largura][altura][3];
+    	copiar(matrizResultado, matrizAux);
+    	erosao_pixel(matrizResultado, matrizAux);
+    	copiar(matrizAux, matrizResultado);
     }
     
-    
-    //BinarizaÃ§Ã£o usar com tons de cinza
-    public void limiar_threshould(int limiar){
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][1];
-                int b = matriz[coluna][linha][2];
-                
-                if(r > limiar)
-                    matriz[coluna][linha][0] = 255;
-                else
-                    matriz[coluna][linha][0] = 0;
-                
-                if(g > limiar)
-                    matriz[coluna][linha][1] = 255;
-                else
-                    matriz[coluna][linha][1] = 0;
-                
-                if(b > limiar)
-                    matriz[coluna][linha][2] = 255;
-                else
-                    matriz[coluna][linha][2] = 0;
-            }
-        }
-    }
-    
-    public void limiar_threshould_resultado(int limiar){
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matrizResultado[coluna][linha][0];
-                int g = matrizResultado[coluna][linha][1];
-                int b = matrizResultado[coluna][linha][2];
-                
-                if(r > limiar)
-                    matrizResultado[coluna][linha][0] = 255;
-                else
-                    matrizResultado[coluna][linha][0] = 0;
-                
-                if(g > limiar)
-                    matrizResultado[coluna][linha][1] = 255;
-                else
-                    matrizResultado[coluna][linha][1] = 0;
-                
-                if(b > limiar)
-                    matrizResultado[coluna][linha][2] = 255;
-                else
-                    matrizResultado[coluna][linha][2] = 0;
-            }
-        }
-    }
-    
-    public void limiar_threshould_inverso(int limiar){
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][1];
-                int b = matriz[coluna][linha][2];
-                
-                if(r < limiar)
-                    matriz[coluna][linha][0] = 255;
-                else
-                    matriz[coluna][linha][0] = 0;
-                
-                if(g < limiar)
-                    matriz[coluna][linha][1] = 255;
-                else
-                    matriz[coluna][linha][1] = 0;
-                
-                if(b < limiar)
-                    matriz[coluna][linha][2] = 255;
-                else
-                    matriz[coluna][linha][2] = 0;
-            }
-        }
-    }
-    
-    //nescessÃ¡rio usar a binarizaÃ§Ã£o
-    public void densidade(){
-        double nunPixel = altura*largura;
-        double ptosPreto = 0;
-        double densidade;
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][1];
-                int b = matriz[coluna][linha][2];
-                
-                if(r == 0 && g == 0 && b == 0){
-                    ptosPreto++;
-                }
-                
-            }
-        }
-        densidade=(ptosPreto/nunPixel) * 100;
-        System.out.println("Densidade: ");
-        System.out.println("Pontos Pretos: "+ ptosPreto);
-        System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
-        System.out.println("Densidade "+ densidade + "%");
-   }
-    
-    public void densidadeResultado(){
-        double nunPixel = altura*largura;
-        double ptosPreto = 0;
-        double densidade;
-        for (int linha = 0; linha < altura; linha++) {
-            for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha][0];
-                int g = matriz[coluna][linha][1];
-                int b = matriz[coluna][linha][2];
-                
-                if(r == 0 && g == 0 && b == 0){
-                    ptosPreto++;
-                }
-                
-            }
-        }
-        densidade=(ptosPreto/nunPixel) * 100;
-        System.out.println("Densidade Resultado: ");
-        System.out.println("Pontos Pretos: "+ ptosPreto);
-        System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
-        System.out.println("Densidade "+ densidade + "%");
-   }
-    
-    
+    /**
+     * 
+     * @param imagem
+     * @param nome
+     * @throws IOException
+     */
     public void salvar(BufferedImage imagem, String nome) throws IOException{
     	File imgSalva = new File(nome+".jpg");
     	ImageIO.write(imagem, "jpg", imgSalva);
@@ -753,7 +866,11 @@ public class Img {
     	
     	
     }
-    
+    /**
+     * 
+     * @param lista
+     * @return
+     */
     public int retornaMediana(List<Integer> lista){
       //Ordena a lista
     	Collections.sort(lista);
@@ -762,6 +879,11 @@ public class Img {
     	return lista.get((lista.size()+1)/2);
     }
     
+    /**
+     * 
+     * @param x
+     * @return
+     */
     public int limitar(int x){
         if(x > 255)
             return 255;
@@ -771,12 +893,23 @@ public class Img {
             else
                 return x;
     }
-   
-    public BufferedImage getImagem() {
-        return imagem;
+    /**
+     * 
+     * @param matrizOriginal
+     * @param matriz
+     */
+    public void copiar(int[][][] matrizOriginal, int[][][] matriz){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matrizOriginal[coluna][linha][0];
+                int g = matrizOriginal[coluna][linha][1];
+                int b = matrizOriginal[coluna][linha][2];
+                
+                matriz[coluna][linha][0] = r;
+                matriz[coluna][linha][1] = g;
+                matriz[coluna][linha][2] = b;
+            }
+        }
     }
     
-    public BufferedImage getImagemResultado() {
-        return imagemResultado;
-    }
 }

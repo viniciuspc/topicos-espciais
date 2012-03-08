@@ -1,51 +1,70 @@
 package imagem;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
 public class Imagem {
+	
+	
 
     public static void main(String[] args) throws IOException {
         long agora = System.currentTimeMillis();
-        System.out.println();
+        String arquivo = "carro.jpg";
+    	BufferedImage imagem = ImageIO.read(new File(arquivo));
+        BufferedImage imagemResultado = ImageIO.read(new File(arquivo));
+        int[][][] matriz;
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        i.lerArquivo("carro_menos_8.jpg");
-        //Fara modificacoes
-        //Soma os ponstos e tira a media 
-        //i.cinza();
+        matriz = i.lerArquivo(imagem);
+        /**
+         * Usado onde for nescessario usar uma mascara
+         */
+        int[][][] matrizResultado;
+        matrizResultado = i.lerArquivo(imagem);
+        
+        i.cinza(matriz, matriz);
         //i.cinzaResultado();
         //i.brilho(80);
         //i.contraste(3);
         //i.negativo();
-        //i.limiar_threshould(127);
         //i.limiar_threshould_inverso(127);
         //i.media();
         //i.mediana();
-        //i.sobel();
+        //i.sobel(matriz, matrizResultado);
         //i.prewitt();
         //i.laplaciano_8();
-        //i.laplaciano_menos_8();
+        i.laplaciano_menos_8(matriz, matrizResultado);
+        i.limiar_threshould(75, matrizResultado, matrizResultado);
         //i.laplaciano_4();
         //i.laplaciano_menos_4();
         //i.limiar_threshould_resultado(100);
+        //i.erosao(matrizResultado, matrizResultado);
+        //i.dilatacao(matrizResultado, matrizResultado);
+        //i.erosao(matrizResultado, matrizResultado);
+        //i.erosao_pixel(matriz, matrizResultado);
+        //i.dilatacao(matriz, matrizResultado);
+        //i.dilatacao_pixel(matriz, matrizResultado);
+        //i.abertura(matrizResultado, matrizResultado);
+        i.fechamento(matrizResultado, matrizResultado);
+        //i.fpbMaior(matriz, matrizResultado);
+        //i.fpbMenor(matriz, matrizResultado);
+        //i.abertura_pixel(matriz, matrizResultado);
         
-        i.erosao();
-        //i.dilataco();
         
-        //i.fpbMaior();
-
-        
-        //i.negativoResultado();
-        i.densidade();
-        i.densidadeResultado();
+        //i.negativo(matrizResultado, matrizResultado);
+        i.densidade(matriz);
+        i.densidade(matrizResultado);
         //Da matriz para o buffer
-        i.lerMatriz();
-        i.lerMatrizResultado();
-        //i.salvar(i.getImagemResultado(), "imagem3_prewitt");
+        i.lerMatriz(matriz, imagem);
+        i.lerMatriz(matrizResultado, imagemResultado);
+        //i.salvar(i.getImagemResultado(), "carro_menos_8_erosao2");
 
         Formulario f = new Formulario();
-        f.setImagem(i.getImagem());
-        f.setImagemResultado(i.getImagemResultado());
+        f.setImagem(imagem);
+        f.setImagemResultado(imagemResultado);
         f.exibir();
 
         System.out.println("Demorou " + (System.currentTimeMillis() - agora));
