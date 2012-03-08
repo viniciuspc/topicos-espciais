@@ -215,9 +215,9 @@ public class Img {
      * @param matriz
      * 
      */
-    public void limiar_threshould(int limiar, int[][][] matrizOriginal, int[][][] matriz){
-    	if(matrizOriginal == matriz)
-    		matrizOriginal = matriz.clone();
+    public void limiar_threshould(int limiar, int[][][] matrizOrigem, int[][][] matriz){
+    	int[][][] matrizAux = new int[largura][altura][3];
+    	copiar(matrizOrigem, matrizAux);
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 int r = matriz[coluna][linha][0];
@@ -669,9 +669,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void dilatacao_pixel(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void dilatacao_pixel(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
@@ -763,9 +763,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void erosao_pixel(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void erosao_pixel(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+        copiar(matrizOrigem, matriz);
     	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
@@ -853,6 +853,76 @@ public class Img {
     	copiar(matrizAux, matrizResultado);
     }
     
+    public void vizinhanca_4(int[][][] matriz, int[][] matrizRegioes){
+        int c = 0;
+    	int vs;
+        int ve;
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+                if(matriz[linha][coluna][0] == 0){
+                    vs = matrizRegioes[linha-1][coluna];
+                    ve = matrizRegioes[linha][coluna-1];
+                    if(vs == 0 && ve == 0){
+                        c++;
+                        matrizRegioes[linha][coluna] = c;
+                    }
+                    else{
+                        if(vs == 0 && ve != 0){
+                            regraB(vs, ve);
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        
+        
+    }
+    
+    /**
+     * 
+     * @param vs
+     * @param ve
+     * @return 
+     */
+    public int regraB(int vs, int ve){
+        return ve;
+    }
+    
+    /**
+     * 
+     * @param vs
+     * @param ve
+     * @return 
+     */
+    public int regraC(int vs, int ve){
+        return vs;
+    }
+    
+    /**
+     * 
+     * @param vs
+     * @param ve
+     * @return 
+     */
+    public int regraD(int vs, int ve){
+        return vs;
+    }
+    
+    
+    /**
+     * 
+     * @param matriz 
+     */
+    public void zerarMatriz(int[][] matriz){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                matriz[coluna][linha] = 0;
+            }
+        }
+    }
+    
     /**
      * 
      * @param imagem
@@ -911,5 +981,15 @@ public class Img {
             }
         }
     }
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public int getLargura() {
+        return largura;
+    }
+    
+    
     
 }
