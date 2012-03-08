@@ -12,7 +12,7 @@ public class Imagem {
 
     public static void main(String[] args) throws IOException {
         long agora = System.currentTimeMillis();
-        String arquivo = "carro.jpg";
+        String arquivo = "objetos.jpg";
     	BufferedImage imagem = ImageIO.read(new File(arquivo));
         BufferedImage imagemResultado = ImageIO.read(new File(arquivo));
         int[][][] matriz;
@@ -25,7 +25,14 @@ public class Imagem {
         int[][][] matrizResultado;
         matrizResultado = i.lerArquivo(imagem);
         
-        i.cinza(matriz, matriz);
+        
+        int[][] matrizRegioes = new int[i.getLargura()][i.getAltura()];
+        i.zerarMatriz(matrizRegioes);
+        
+        i.limiar_threshould(60, matriz, matriz);
+
+        
+        //i.cinza(matriz, matriz);
         //i.cinzaResultado();
         //i.brilho(80);
         //i.contraste(3);
@@ -36,19 +43,19 @@ public class Imagem {
         //i.sobel(matriz, matrizResultado);
         //i.prewitt();
         //i.laplaciano_8();
-        i.laplaciano_menos_8(matriz, matrizResultado);
-        i.limiar_threshould(75, matrizResultado, matrizResultado);
+        //i.laplaciano_menos_8(matriz, matrizResultado);
+        //i.limiar_threshould(60, matrizResultado, matrizResultado);
         //i.laplaciano_4();
         //i.laplaciano_menos_4();
         //i.limiar_threshould_resultado(100);
         //i.erosao(matrizResultado, matrizResultado);
         //i.dilatacao(matrizResultado, matrizResultado);
         //i.erosao(matrizResultado, matrizResultado);
-        //i.erosao_pixel(matriz, matrizResultado);
+        //i.erosao_pixel(matrizResultado, matrizResultado);
         //i.dilatacao(matriz, matrizResultado);
-        //i.dilatacao_pixel(matriz, matrizResultado);
+        //i.dilatacao_pixel(matrizResultado, matrizResultado);
         //i.abertura(matrizResultado, matrizResultado);
-        i.fechamento(matrizResultado, matrizResultado);
+        //i.fechamento(matrizResultado, matrizResultado);
         //i.fpbMaior(matriz, matrizResultado);
         //i.fpbMenor(matriz, matrizResultado);
         //i.abertura_pixel(matriz, matrizResultado);
