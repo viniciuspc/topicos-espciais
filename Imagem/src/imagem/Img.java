@@ -453,9 +453,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void sobel(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void sobel(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
