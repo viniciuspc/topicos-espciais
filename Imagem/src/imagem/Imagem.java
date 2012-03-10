@@ -29,9 +29,8 @@ public class Imagem {
         int[][] matrizRegioes = new int[i.getLargura()][i.getAltura()];
         i.zerarMatriz(matrizRegioes);
         //i.cinza(matriz, matriz);
-        i.limiar_threshould(60, matriz, matriz);
-        i.sobel(matriz, matriz);
-        i.dilatacao(matriz, matrizResultado);
+        i.limiar_threshould(127, matriz, matriz);
+        i.vizinhanca_4(matriz, matrizRegioes);
         
         //i.cinza(matriz, matriz);
         //i.cinzaResultado();

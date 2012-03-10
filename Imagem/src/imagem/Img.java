@@ -778,12 +778,12 @@ public class Img {
             		&& matriz[coluna-1][linha+1][0] == COR_OBJETO && matriz[coluna][linha+1][0] == COR_OBJETO && matriz[coluna+1][linha+1][0] == COR_OBJETO
             		){
             			matrizResultado[coluna][linha][0] = COR_OBJETO;
-                                matrizResultado[coluna][linha][1] = COR_OBJETO;
-                                matrizResultado[coluna][linha][2] = COR_OBJETO;
+                        matrizResultado[coluna][linha][1] = COR_OBJETO;
+                        matrizResultado[coluna][linha][2] = COR_OBJETO;
             		} else {
             			matrizResultado[coluna][linha][0] = COR_FUNDO;
-                                matrizResultado[coluna][linha][1] = COR_FUNDO;
-                                matrizResultado[coluna][linha][2] = COR_FUNDO;
+                        matrizResultado[coluna][linha][1] = COR_FUNDO;
+                        matrizResultado[coluna][linha][2] = COR_FUNDO;
             		}
             	}
             }
@@ -859,25 +859,27 @@ public class Img {
         int ve;
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
-                if(matriz[linha][coluna][0] == 0){
-                    vs = matrizRegioes[linha-1][coluna];
-                    ve = matrizRegioes[linha][coluna-1];
+                if(matriz[coluna][linha][0] == 0){
+                    vs = matrizRegioes[coluna][linha-1];
+                    ve = matrizRegioes[coluna-1][linha];
                     if(vs == 0 && ve == 0){
                         c++;
-                        matrizRegioes[linha][coluna] = c;
-                    }
-                    else{
-                        if(vs == 0 && ve != 0){
-                            regraB(vs, ve);
-                        }
+                        matrizRegioes[coluna][linha] = c;
+                    } else {
+                    	if(vs!=0){
+                    		matrizRegioes[coluna][linha] = vs;
+                    	} else {
+                    		if(ve != 0){
+                        		matrizRegioes[coluna][linha] = ve;
+                    		}
+                    	}
+                    	
                     }
                 }
             }
         }
         
-        
-        
-        
+        System.out.println("Numero de objetos: "+c);
     }
     
     /**
