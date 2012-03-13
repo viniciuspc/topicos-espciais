@@ -32,38 +32,11 @@ public class Imagem {
         i.limiar_threshould(127, matriz, matriz);
         i.vizinhanca_4(matriz, matrizRegioes);
         
-        //i.cinza(matriz, matriz);
-        //i.cinzaResultado();
-        //i.brilho(80);
-        //i.contraste(3);
-        //i.negativo();
-        //i.limiar_threshould_inverso(127);
-        //i.media();
-        //i.mediana();
-        //i.sobel(matriz, matrizResultado);
-        //i.prewitt();
-        //i.laplaciano_8();
-        //i.laplaciano_menos_8(matriz, matrizResultado);
-        //i.limiar_threshould(60, matrizResultado, matrizResultado);
-        //i.laplaciano_4();
-        //i.laplaciano_menos_4();
-        //i.limiar_threshould_resultado(100);
-        //i.erosao(matrizResultado, matrizResultado);
-        //i.dilatacao(matrizResultado, matrizResultado);
-        //i.erosao(matrizResultado, matrizResultado);
-        //i.erosao_pixel(matrizResultado, matrizResultado);
-        //i.dilatacao(matriz, matrizResultado);
-        //i.dilatacao_pixel(matrizResultado, matrizResultado);
-        //i.abertura(matrizResultado, matrizResultado);
-        //i.fechamento(matrizResultado, matrizResultado);
-        //i.fpbMaior(matriz, matrizResultado);
-        //i.fpbMenor(matriz, matrizResultado);
-        //i.abertura_pixel(matriz, matrizResultado);
         
         
         //i.negativo(matrizResultado, matrizResultado);
-        i.densidade(matriz);
-        i.densidade(matrizResultado);
+        //i.densidade(matriz);
+        //i.densidade(matrizResultado);
         //Da matriz para o buffer
         i.lerMatriz(matriz, imagem);
         i.lerMatriz(matrizResultado, imagemResultado);

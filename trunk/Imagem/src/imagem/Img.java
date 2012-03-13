@@ -298,7 +298,7 @@ public class Img {
         densidade=(ptosPreto/nunPixel) * 100;
         System.out.println("Densidade: ");
         System.out.println("Pontos Pretos: "+ ptosPreto);
-        System.out.println("NÃºmero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
+        System.out.println("Numero de pixels :"+ nunPixel+" Altura: "+altura+" x Largura: "+largura);
         System.out.println("Densidade "+ densidade + "%");
    }
 
@@ -855,6 +855,7 @@ public class Img {
     
     public void vizinhanca_4(int[][][] matriz, int[][] matrizRegioes){
         int c = 0;
+        List<Integer> listaRelacao = new ArrayList<Integer>();
     	int vs;
         int ve;
         for (int linha = 1; linha < altura-2; linha++) {
@@ -865,21 +866,31 @@ public class Img {
                     if(vs == 0 && ve == 0){
                         c++;
                         matrizRegioes[coluna][linha] = c;
+                        listaRelacao.add(c);
                     } else {
+                        matrizRegioes[coluna][linha] = c;
+                        if((vs != 0 && ve != 0) && (vs != ve)){
+                            
+                            listaRelacao.add(c, vs);
+                        }
+                        /*
                     	if(vs!=0){
                     		matrizRegioes[coluna][linha] = vs;
                     	} else {
                     		if(ve != 0){
                         		matrizRegioes[coluna][linha] = ve;
                     		}
-                    	}
+                    	}*/
                     	
                     }
                 }
             }
         }
         
-        System.out.println("Numero de objetos: "+c);
+        System.out.println("Numero de objetos: "+c+" lista.size "+listaRelacao.size());
+        for (Integer integer : listaRelacao) {
+            System.out.println(integer);
+        }
     }
     
     /**

@@ -23,7 +23,7 @@ public class Formulario {
         iconResultado =  new ImageIcon(imagemResultado);
         JFrame f = new JFrame("Imagem");
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        System.out.println(d.width+"x"+d.height);
+        //System.out.println(d.width+"x"+d.height);
         JPanel p = new JPanel();
         JLabel lblImagem = new JLabel();
         JLabel lblImagemResultado = new JLabel();
