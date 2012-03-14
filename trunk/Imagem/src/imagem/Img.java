@@ -851,11 +851,11 @@ public class Img {
     	copiar(matrizAux, matrizResultado);
     }
     
+
     public void vizinhanca_4(int[][][] matriz, int[][] matrizRegioes){
         int c = 0;
-
-        Map<Integer, Integer> mapRelacao = new HashMap<Integer, Integer>();
-
+        List<Integer> listaRelacao = new ArrayList<Integer>();
+        listaRelacao.add(0, null);
     	int vs;
         int ve;
         for (int linha = 1; linha < altura-2; linha++) {
@@ -866,12 +866,12 @@ public class Img {
                     if(vs == 0 && ve == 0){
                         c++;
                         matrizRegioes[coluna][linha] = c;
-                        mapRelacao.put(c, c);
+                        listaRelacao.add(c,c);
                     } else {
                         matrizRegioes[coluna][linha] = c;
                         if((vs != 0 && ve != 0) && (vs != ve)){
                             
-                            mapRelacao.put(c, vs);
+                            listaRelacao.set(c, vs);
                         }
                         /*
                     	if(vs!=0){
@@ -887,12 +887,12 @@ public class Img {
             }
         }
         
-        System.out.println("Numero de objetos: "+c+" lista.size "+mapRelacao.size());
-       for(int i = 0; i < mapRelacao.size(); i++){
-           System.out.println(mapRelacao.get(i));
-       }
+        System.out.println("Contador: "+c+" lista.size "+listaRelacao.size());
+        for(int i = 1; i<listaRelacao.size(); i++){
+        	System.out.println(i+"\t"+listaRelacao.get(i));
+        }
     }
-    
+        
     /**
      * 
      * @param vs
