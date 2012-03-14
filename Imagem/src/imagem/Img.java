@@ -868,20 +868,23 @@ public class Img {
                         matrizRegioes[coluna][linha] = c;
                         listaRelacao.add(c,c);
                     } else {
-                        matrizRegioes[coluna][linha] = c;
                         if((vs != 0 && ve != 0) && (vs != ve)){
                             
                             listaRelacao.set(c, vs);
                         }
-                        /*
+                      
                     	if(vs!=0){
                     		matrizRegioes[coluna][linha] = vs;
                     	} else {
                     		if(ve != 0){
                         		matrizRegioes[coluna][linha] = ve;
-                    		}
-                    	}*/
-                    	
+                    		} else {
+                            if((vs != 0 && ve != 0) && (vs != ve)){
+                              matrizRegioes[coluna][linha] = vs;
+                              listaRelacao.set(c, vs);
+                            }
+                          }
+                    	}
                     }
                 }
             }
