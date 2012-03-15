@@ -895,10 +895,10 @@ public class Img {
             }
         }
         
-        /*System.out.println("Contador: "+c+" lista.size "+listaRelacao.size());
+        System.out.println("Contador: "+c+" lista.size "+listaRelacao.size());
         for(int i = 1; i<listaRelacao.size(); i++){
         	System.out.println(i+"\t"+listaRelacao.get(i));
-        }*/
+        }
         
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -914,7 +914,7 @@ public class Img {
 				listaRelacaoSemRepitacao.add(integer);
 			}
 		}
-        //no listaRelacaoSemRepitacao.size() deve subtrair 1 por que na posição 0 da lista é null
+        //no listaRelacaoSemRepitacao.size() deve subtrair 1 por que na posicao 0 da lista ï¿½ null
         nObjetos = listaRelacaoSemRepitacao.size()-1;
         
         for (int linha = 1; linha < altura-2; linha++) {
@@ -928,7 +928,7 @@ public class Img {
             }    
         }
         
-        System.out.println("Nº Objetos: "+ nObjetos);
+        System.out.println("N Objetos: "+ nObjetos);
         
         int tonsDeCinza = 255/nObjetos;
         
