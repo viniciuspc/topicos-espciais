@@ -852,6 +852,11 @@ public class Img {
     }
     
 
+    /**
+     * Realiza a contagem de objetos usando o conceito de vizinhaca de 4 pixels
+     * @param matriz
+     * @param matrizRegioes
+     */
     public void vizinhanca_4(int[][][] matriz, int[][] matrizRegioes){
     	
         int c = 0;
@@ -939,37 +944,6 @@ public class Img {
         
         
     }
-        
-    /**
-     * 
-     * @param vs
-     * @param ve
-     * @return 
-     */
-    public int regraB(int vs, int ve){
-        return ve;
-    }
-    
-    /**
-     * 
-     * @param vs
-     * @param ve
-     * @return 
-     */
-    public int regraC(int vs, int ve){
-        return vs;
-    }
-    
-    /**
-     * 
-     * @param vs
-     * @param ve
-     * @return 
-     */
-    public int regraD(int vs, int ve){
-        return vs;
-    }
-    
     
     /**
      * 
