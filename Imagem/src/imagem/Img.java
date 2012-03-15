@@ -895,10 +895,10 @@ public class Img {
             }
         }
         
-        System.out.println("Contador: "+c+" lista.size "+listaRelacao.size());
+        /*System.out.println("Contador: "+c+" lista.size "+listaRelacao.size());
         for(int i = 1; i<listaRelacao.size(); i++){
         	System.out.println(i+"\t"+listaRelacao.get(i));
-        }
+        }*/
         
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
