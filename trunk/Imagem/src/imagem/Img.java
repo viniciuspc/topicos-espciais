@@ -853,37 +853,37 @@ public class Img {
     
 
     public void vizinhanca_4(int[][][] matriz, int[][] matrizRegioes){
+    	
         int c = 0;
         List<Integer> listaRelacao = new ArrayList<Integer>();
         listaRelacao.add(0, null);
     	int vs;
         int ve;
+        
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                 if(matriz[coluna][linha][0] == 0){
                     vs = matrizRegioes[coluna][linha-1];
                     ve = matrizRegioes[coluna-1][linha];
+                    
                     if(vs == 0 && ve == 0){
                         c++;
                         matrizRegioes[coluna][linha] = c;
+                        	
                         listaRelacao.add(c,c);
                     } else {
                         if((vs != 0 && ve != 0) && (vs != ve)){
-                            
+                        	matrizRegioes[coluna][linha] = vs;
                             listaRelacao.set(c, vs);
+                            
                         }
-                      
+                        
                     	if(vs!=0){
                     		matrizRegioes[coluna][linha] = vs;
                     	} else {
                     		if(ve != 0){
                         		matrizRegioes[coluna][linha] = ve;
-                    		} else {
-                            if((vs != 0 && ve != 0) && (vs != ve)){
-                              matrizRegioes[coluna][linha] = vs;
-                              listaRelacao.set(c, vs);
-                            }
-                          }
+                    		}
                     	}
                     }
                 }
@@ -894,6 +894,50 @@ public class Img {
         for(int i = 1; i<listaRelacao.size(); i++){
         	System.out.println(i+"\t"+listaRelacao.get(i));
         }
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+            	if(matrizRegioes[coluna][linha] != 0)
+            		matrizRegioes[coluna][linha] = listaRelacao.get(matrizRegioes[coluna][linha]);
+            }    
+        }
+        
+        int nObjetos=0;
+        List<Integer> listaRelacaoSemRepitacao = new ArrayList<Integer>();
+        for (Integer integer : listaRelacao) {
+			if(!listaRelacaoSemRepitacao.contains(integer)){
+				listaRelacaoSemRepitacao.add(integer);
+			}
+		}
+        //no listaRelacaoSemRepitacao.size() deve subtrair 1 por que na posição 0 da lista é null
+        nObjetos = listaRelacaoSemRepitacao.size()-1;
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+            	
+            	if(matrizRegioes[coluna][linha] != 0){
+            		matrizRegioes[coluna][linha] = listaRelacaoSemRepitacao.indexOf(matrizRegioes[coluna][linha]);
+            	}
+            		
+            		
+            }    
+        }
+        
+        System.out.println("Nº Objetos: "+ nObjetos);
+        
+        int tonsDeCinza = 255/nObjetos;
+        
+        for (int linha = 1; linha < altura-2; linha++) {
+            for (int coluna = 1; coluna < largura-2; coluna++) {
+            	matriz[coluna][linha][0] = matrizRegioes[coluna][linha]*tonsDeCinza;
+            	matriz[coluna][linha][1] = matrizRegioes[coluna][linha]*tonsDeCinza;
+            	matriz[coluna][linha][2] = matrizRegioes[coluna][linha]*tonsDeCinza;
+            }    
+        }
+        
+        
+        
+        
     }
         
     /**
