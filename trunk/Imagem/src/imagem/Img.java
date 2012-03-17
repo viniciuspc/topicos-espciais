@@ -57,6 +57,32 @@ public class Img {
             }
         }
     }
+    
+    public void lerMatriz(int[][] matriz, BufferedImage imagem) {
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha];
+                int g = matriz[coluna][linha];
+                int b = matriz[coluna][linha];
+                Color pixel = new Color(r, g, b);
+                imagem.setRGB(coluna, linha, pixel.getRGB());
+            }
+        }
+    }
+    
+    public void lerHistograma(int[][] matriz, BufferedImage imagem) {
+    	
+        for (int linha = 0; linha < 101; linha++) {
+            for (int coluna = 0; coluna < 256; coluna++) {
+                int r = matriz[coluna][linha];
+                int g = matriz[coluna][linha];
+                int b = matriz[coluna][linha];
+                Color pixel = new Color(r, g, b);
+                imagem.setRGB(coluna, linha, pixel.getRGB());
+            }
+        }
+    }
+    
     /**
      * 
      * @param matrizOriginal
@@ -64,8 +90,7 @@ public class Img {
      * @param imagem
      */
     public void azul(int[][][] matrizOriginal, int[][][] matriz, BufferedImage imagem) {
-    	if(matrizOriginal == matriz)
-    		matrizOriginal = matriz.clone();
+    	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 int r = matriz[coluna][linha][0];
@@ -84,8 +109,7 @@ public class Img {
      */
     public void cinza(int[][][] matrizOriginal, int[][][] matriz){
     	
-    	if(matrizOriginal == matriz)
-    		matrizOriginal = matriz.clone();
+    	
     	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -110,8 +134,7 @@ public class Img {
      */
     public void brilho(Integer valor, int[][][] matrizOriginal, int[][][] matriz){
     	
-    	if(matrizOriginal == matriz)
-    		matrizOriginal = matriz.clone();
+    	
     	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -152,8 +175,7 @@ public class Img {
      * @param matriz
      */
     public void contraste(double valor, int[][][] matrizOriginal, int[][][] matriz){
-    	if(matrizOriginal == matriz)
-    		matrizOriginal = matriz.clone();
+    	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 double r = matrizOriginal[coluna][linha][0] * (valor);
@@ -191,8 +213,9 @@ public class Img {
      * @param matriz
      */
     public void negativo(int[][][] matrizOriginal, int[][][] matriz){
-    	if(matrizOriginal == matriz)
-    		matrizOriginal = matriz.clone();
+    	int[][][] matrizAux = new int[largura][altura][3];
+    	copiar(matrizOriginal, matriz);
+    	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 int r = 255-matrizOriginal[coluna][linha][0];
@@ -246,9 +269,10 @@ public class Img {
      * @param matrizOriginal
      * @param matriz
      */
-    public void limiar_threshould_inverso(int limiar, int[][][] matrizOriginal, int[][][] matriz){
-    	if(matrizOriginal == matriz)
-    		matrizOriginal = matriz.clone();
+    public void limiar_threshould_inverso(int limiar, int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
+    	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 int r = matriz[coluna][linha][0];
@@ -310,9 +334,10 @@ public class Img {
       * @param matriz
       * @param matrizResultado
       */
-    public void media(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void media(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
+    	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
                 	matrizResultado[coluna][linha][0] = (matriz[coluna-1][linha-1][0]+matriz[coluna][linha-1][0]+matriz[coluna+1][linha-1][0]
@@ -340,9 +365,10 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void mediana(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void mediana(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
+    	
     	List<Integer> lista = new ArrayList<Integer>();
     	for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -395,9 +421,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void fpbMaior(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void fpbMaior(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	int maior = 0;
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -490,9 +516,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void prewitt(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void prewitt(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -532,9 +558,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void laplaciano_8(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void laplaciano_8(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -565,9 +591,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void laplaciano_menos_8(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void laplaciano_menos_8(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -601,9 +627,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void laplaciano_4(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void laplaciano_4(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -634,9 +660,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void laplaciano_menos_4(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz, matrizResultado);
+    public void laplaciano_menos_4(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
@@ -825,9 +851,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void abertura_pixel(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz,matrizResultado);
+    public void abertura_pixel(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
     	erosao_pixel(matriz, matrizResultado);
     	int[][][] matrizAux = new int[largura][altura][3];
@@ -840,9 +866,9 @@ public class Img {
      * @param matriz
      * @param matrizResultado
      */
-    public void fechamento_pixel(int[][][] matriz, int[][][] matrizResultado){
-    	if(matriz == matrizResultado)
-    		copiar(matriz,matrizResultado);
+    public void fechamento_pixel(int[][][] matrizOrigem, int[][][] matrizResultado){
+    	int[][][] matriz = new int[largura][altura][3];
+    	copiar(matrizOrigem, matriz);
     	
     	dilatacao_pixel(matriz, matrizResultado);
     	int[][][] matrizAux = new int[largura][altura][3];
@@ -894,12 +920,31 @@ public class Img {
                 }
             }
         }
+        boolean teveTroca = false;
+        //Verifica se o indice e o valor são diferentes se for
+        do{
+        	teveTroca = false;
+	        ArrayList<Integer> listaRelacaoCopia = new ArrayList<>(listaRelacao);
+	        for (int i = 1; i<listaRelacaoCopia.size(); i++) {
+	        	if(i != listaRelacaoCopia.get(i)){
+	        		if(listaRelacaoCopia.get(listaRelacao.get(i)) != listaRelacao.get(i) ){
+	        			listaRelacao.set(i, listaRelacaoCopia.get(listaRelacao.get(i)));
+	        			teveTroca=true;
+	        		}
+	        	}
+	        		
+			}
+        } while(teveTroca);
+        
         
         System.out.println("Contador: "+c+" lista.size "+listaRelacao.size());
         for(int i = 1; i<listaRelacao.size(); i++){
         	System.out.println(i+"\t"+listaRelacao.get(i));
         }
         
+        
+        
+        //Lê a listaRelacao e substitui na matrizRegioes
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
             	if(matrizRegioes[coluna][linha] != 0)
@@ -939,10 +984,99 @@ public class Img {
             	matriz[coluna][linha][2] = matrizRegioes[coluna][linha]*tonsDeCinza;
             }    
         }
-        
-        
-        
-        
+    }
+    
+    public void histograma(int[][][] matriz, int[][] histograma){
+    	final int NUM_PIXEL = largura*altura;
+    	System.out.println(NUM_PIXEL);
+    	int[] arrayHistograma = new int[256];
+    	
+    	 for (int linha = 0; linha <= 100; linha++) {
+             for (int coluna = 0; coluna <= 255; coluna++) {
+            	 histograma[coluna][linha] = 255;
+             }
+         }
+    	
+    	for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+            	arrayHistograma[matriz[coluna][linha][0]]++;
+            }    
+        }
+    	
+    	for (int i = 0; i<arrayHistograma.length; i++) {
+    		double porcentagem = arrayHistograma[i]*100/NUM_PIXEL;
+    		arrayHistograma[i] = (int)porcentagem;
+			//System.out.println(arrayHistograma[i]);
+		}
+    	
+    	for(int i = 0; i<arrayHistograma.length; i++){
+    		if(arrayHistograma[i] > 0){
+    			for(int k = 0; k<=arrayHistograma[i]; k++){
+    				histograma[255-i][100-(arrayHistograma[i]-k)] = 0;
+    			}
+    		}
+    	}
+    	
+    }
+    
+    public void projecaoVertical(int[][][] matriz, int[][] projecaoVertical){
+    	final int NUM_PIXEL = largura*altura;
+    	System.out.println(NUM_PIXEL);
+    	int[] arrayProjecaoVertical = new int[largura+1];
+    	
+    	brancoMatriz(projecaoVertical);
+    	for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+            	if(matriz[coluna][linha][0] == 0)
+            		arrayProjecaoVertical[coluna]++;
+            }    
+    	}
+    	
+    	
+    	/*
+    	for (int i : arrayProjecaoVertical) {
+			System.out.println(i);
+		}*/
+    	
+    	for(int i = 0; i<arrayProjecaoVertical.length; i++){
+    		if(arrayProjecaoVertical[i] > 0){
+    			for(int k = 0; k<=arrayProjecaoVertical[i]; k++){
+    				projecaoVertical[i][(arrayProjecaoVertical[i]-k)] = 0;
+    			}
+    		}
+    	}
+    	
+    }
+    
+    public void projecaoHorizontal(int[][][] matriz, int[][] projecaoHorizontal ){
+    	final int NUM_PIXEL = largura*altura;
+    	System.out.println(NUM_PIXEL);
+    	int[] arrayHorizontal = new int[altura+1];
+    	
+    	brancoMatriz(projecaoHorizontal);
+    	
+    	for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+            	if(matriz[coluna][linha][0] == 0)
+            		arrayHorizontal[linha]++;
+            }    
+        }
+    	
+    	for(int i = 0; i<arrayHorizontal.length; i++){
+    		if(arrayHorizontal[i] > 0){
+    			for(int k = 0; k<=arrayHorizontal[i]; k++){
+    				projecaoHorizontal[arrayHorizontal[i]-k][i] = 0;
+    			}
+    		}
+    		
+    	}
+    	
+    	/*
+    	for (int i : arrayHorizontal) {
+    		//double porcentagem = (double) i*100/NUM_PIXEL;
+			System.out.println(i);
+		}*/
+    	
     }
     
     /**
@@ -953,6 +1087,14 @@ public class Img {
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 matriz[coluna][linha] = 0;
+            }
+        }
+    }
+    
+    public void brancoMatriz(int[][] matriz){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                matriz[coluna][linha] = 255;
             }
         }
     }
