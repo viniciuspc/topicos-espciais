@@ -12,7 +12,7 @@ public class Imagem {
 
     public static void main(String[] args) throws IOException {
         long agora = System.currentTimeMillis();
-        String arquivo = "lego1.jpg";
+        String arquivo = "lego2.jpg";
        
     	BufferedImage imagem = ImageIO.read(new File(arquivo));
         BufferedImage imagemResultado = ImageIO.read(new File(arquivo));
@@ -31,10 +31,19 @@ public class Imagem {
         int[][] matrizRegioes = new int[i.getLargura()][i.getAltura()];
         i.zerarMatriz(matrizRegioes);
         
+        i.contraste(2.9, matriz, matriz);
+        i.cinza(matriz, matriz);
+        i.limiar_threshould(240, matriz, matriz);
+        i.abertura(matriz, matriz);
+        
+        i.vizinhanca_4(matriz, matrizRegioes);
+        
+        /*
         i.cinza(matriz, matriz);
         i.sobel(matriz, matriz);
         i.limiar_threshould(100, matriz, matriz);
-        i.fechamento(matriz, matrizResultado);
+        i.abertura(matriz, matrizResultado);
+        */
         
         //Para a foto do corrolla
         /*
@@ -71,7 +80,7 @@ public class Imagem {
         i.lerMatriz(projecaoVertical, grficoProjecaoVertical);
         i.lerHistograma(histograma, graficoHistograma);
         
-        i.salvar(imagemResultado, "lego-abertura");
+        //i.salvar(imagemResultado, "lego-abertura");
 
         Formulario f = new Formulario();
         f.setImagem(imagem);

@@ -923,8 +923,10 @@ public class Img {
                 }
             }
         }
+        
+        
         boolean teveTroca = false;
-        //Verifica se o indice e o valor são diferentes se for
+        
         do{
         	teveTroca = false;
 	        ArrayList<Integer> listaRelacaoCopia = new ArrayList<>(listaRelacao);
@@ -976,8 +978,13 @@ public class Img {
             }    
         }
         
-        System.out.println("N Objetos: "+ nObjetos);
         /*
+        for (Integer integer : listaRelacaoSemRepitacao) {
+			System.out.println(integer);
+		}*/
+        
+        System.out.println("N Objetos: "+ nObjetos);
+        
         int tonsDeCinza = 255/nObjetos;
         
         for (int linha = 1; linha < altura-2; linha++) {
@@ -986,7 +993,7 @@ public class Img {
             	matriz[coluna][linha][1] = matrizRegioes[coluna][linha]*tonsDeCinza;
             	matriz[coluna][linha][2] = matrizRegioes[coluna][linha]*tonsDeCinza;
             }    
-        }*/
+        }
     }
     
     public void histograma(int[][][] matriz, int[][] histograma){
