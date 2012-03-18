@@ -47,11 +47,11 @@ public class Formulario {
         lblHistograma.setIcon(iconHistograma);
         
         
-        p.add(lblImagem, BorderLayout.WEST);
+        p.add(lblImagem);
         p.add(lblImagemResultado, BorderLayout.EAST);
-        p.add(lblProjecaoHorizontal, BorderLayout.SOUTH);
-        p.add(lblProjecaoVertical, BorderLayout.SOUTH);
-        p.add(lblHistograma, BorderLayout.SOUTH);
+        //p.add(lblProjecaoHorizontal);
+        //p.add(lblProjecaoVertical);
+        //p.add(lblHistograma);
         f.add(p);
         
         JScrollPane scrollBar=new JScrollPane(p,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);

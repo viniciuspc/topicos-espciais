@@ -726,7 +726,7 @@ public class Img {
     	
     	int[][][] matriz = new int[largura][altura][3];
     	copiar(matrizOrigem, matriz);
-    		
+    	pretoMatriz(matrizResultado);
     	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
@@ -757,6 +757,9 @@ public class Img {
     public void erosao(int[][][] matrizOrigem, int[][][] matrizResultado){
     	int[][][] matriz = new int[largura][altura][3];
     	copiar(matrizOrigem, matriz);
+    	brancoMatriz(matrizResultado);
+    	
+    	
     	
     	final int COR_OBJETO = 255;
     	final int COR_FUNDO = 0;
@@ -959,7 +962,7 @@ public class Img {
 				listaRelacaoSemRepitacao.add(integer);
 			}
 		}
-        //no listaRelacaoSemRepitacao.size() deve subtrair 1 por que na posicao 0 da lista � null
+        //no listaRelacaoSemRepitacao.size() deve subtrair 1 por que na posicao 0 da lista e null
         nObjetos = listaRelacaoSemRepitacao.size()-1;
         
         for (int linha = 1; linha < altura-2; linha++) {
@@ -974,7 +977,7 @@ public class Img {
         }
         
         System.out.println("N Objetos: "+ nObjetos);
-        
+        /*
         int tonsDeCinza = 255/nObjetos;
         
         for (int linha = 1; linha < altura-2; linha++) {
@@ -983,7 +986,7 @@ public class Img {
             	matriz[coluna][linha][1] = matrizRegioes[coluna][linha]*tonsDeCinza;
             	matriz[coluna][linha][2] = matrizRegioes[coluna][linha]*tonsDeCinza;
             }    
-        }
+        }*/
     }
     
     public void histograma(int[][][] matriz, int[][] histograma){
@@ -1041,7 +1044,7 @@ public class Img {
     	for(int i = 0; i<arrayProjecaoVertical.length; i++){
     		if(arrayProjecaoVertical[i] > 0){
     			for(int k = 0; k<=arrayProjecaoVertical[i]; k++){
-    				projecaoVertical[i][(arrayProjecaoVertical[i]-k)] = 0;
+    				//projecaoVertical[i][(arrayProjecaoVertical[i]-k)] = 0;
     			}
     		}
     	}
@@ -1065,7 +1068,7 @@ public class Img {
     	for(int i = 0; i<arrayHorizontal.length; i++){
     		if(arrayHorizontal[i] > 0){
     			for(int k = 0; k<=arrayHorizontal[i]; k++){
-    				projecaoHorizontal[arrayHorizontal[i]-k][i] = 0;
+    				//projecaoHorizontal[arrayHorizontal[i]-k][i] = 0;
     			}
     		}
     		
@@ -1095,6 +1098,26 @@ public class Img {
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 matriz[coluna][linha] = 255;
+            }
+        }
+    }
+    
+    public void brancoMatriz(int[][][] matriz){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                matriz[coluna][linha][0] = 255;
+                matriz[coluna][linha][1] = 255;
+                matriz[coluna][linha][2] = 255;
+            }
+        }
+    }
+    
+    public void pretoMatriz(int[][][] matriz){
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                matriz[coluna][linha][0] = 0;
+                matriz[coluna][linha][1] = 0;
+                matriz[coluna][linha][2] = 0;
             }
         }
     }

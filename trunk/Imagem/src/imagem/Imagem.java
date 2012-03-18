@@ -29,31 +29,32 @@ public class Imagem {
         
         
         int[][] matrizRegioes = new int[i.getLargura()][i.getAltura()];
-        //i.zerarMatriz(matrizRegioes);
-        //i.media(matriz, matriz);
-        i.contraste(3, matriz, matriz);
+        i.zerarMatriz(matrizRegioes);
+        
         i.cinza(matriz, matriz);
-        //i.media(matriz, matriz);
+        i.sobel(matriz, matriz);
+        i.limiar_threshould(100, matriz, matriz);
+        i.fechamento(matriz, matrizResultado);
+        
+        //Para a foto do corrolla
+        /*
+        i.cinza(matriz, matriz);
+        i.mediana(matriz, matriz);
+        i.laplaciano_menos_8(matriz, matriz);
+        i.limiar_threshould(70, matriz, matriz);
+        i.dilatacao(matriz, matriz);
+        i.negativo(matriz, matriz);
+        */
+        
+        /*
+        i.contraste(2.90, matriz, matriz);
+        i.cinza(matriz, matriz);
         i.limiar_threshould(240, matriz, matriz);
-        
-        
-        //i.fechamento(matriz, matriz);
-        //i.sobel(matriz, matriz);
-        //i.limiar_threshould(80, matriz, matriz);
-        //i.negativo(matriz, matriz);
-        //i.histograma(matriz);
-        //i.dilatacao(matriz, matriz);
-        //i.media(matriz, matriz);
-        //i.dilatacao(matriz, matriz);
         i.erosao(matriz, matriz);
         i.media(matriz, matriz);
         i.vizinhanca_4(matriz, matrizRegioes);
+        */
         
-        
-        
-        //i.negativo(matrizResultado, matrizResultado);
-        //i.densidade(matriz);
-        //i.densidade(matrizResultado);
         int[][] projecaoHorizontal = new int[i.getLargura()][i.getAltura()];
         BufferedImage grficoProjecaoHorizontal = new BufferedImage(i.getLargura(), i.getAltura(), BufferedImage.TYPE_INT_RGB );
         i.projecaoHorizontal(matriz, projecaoHorizontal);
@@ -69,7 +70,8 @@ public class Imagem {
         i.lerMatriz(projecaoHorizontal, grficoProjecaoHorizontal);
         i.lerMatriz(projecaoVertical, grficoProjecaoVertical);
         i.lerHistograma(histograma, graficoHistograma);
-        //i.salvar(i.getImagemResultado(), "carro_menos_8_erosao2");
+        
+        i.salvar(imagemResultado, "lego-abertura");
 
         Formulario f = new Formulario();
         f.setImagem(imagem);
