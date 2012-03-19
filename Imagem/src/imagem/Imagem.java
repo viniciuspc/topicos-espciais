@@ -12,7 +12,7 @@ public class Imagem {
 
     public static void main(String[] args) throws IOException {
         long agora = System.currentTimeMillis();
-        String arquivo = "lego2.jpg";
+        String arquivo = "lego1.jpg";
        
     	BufferedImage imagem = ImageIO.read(new File(arquivo));
         BufferedImage imagemResultado = ImageIO.read(new File(arquivo));
@@ -31,12 +31,15 @@ public class Imagem {
         int[][] matrizRegioes = new int[i.getLargura()][i.getAltura()];
         i.zerarMatriz(matrizRegioes);
         
-        i.contraste(2.9, matriz, matriz);
-        i.cinza(matriz, matriz);
-        i.limiar_threshould(240, matriz, matriz);
-        i.abertura(matriz, matriz);
+        //i.cinza(matriz, matriz);
+        i.negativo(matriz, matriz);
         
-        i.vizinhanca_4(matriz, matrizRegioes);
+        //i.contraste(2.9, matriz, matriz);
+        //i.cinza(matriz, matriz);
+        //i.limiar_threshould(240, matriz, matriz);
+        //i.abertura(matriz, matriz);
+        
+        //i.vizinhanca_4(matriz, matrizRegioes);
         
         /*
         i.cinza(matriz, matriz);
@@ -80,7 +83,7 @@ public class Imagem {
         i.lerMatriz(projecaoVertical, grficoProjecaoVertical);
         i.lerHistograma(histograma, graficoHistograma);
         
-        //i.salvar(imagemResultado, "lego-abertura");
+        i.salvar(imagem, "lego-negativo-cor");
 
         Formulario f = new Formulario();
         f.setImagem(imagem);
