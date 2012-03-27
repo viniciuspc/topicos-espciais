@@ -19,11 +19,13 @@ public class Formulario {
     private BufferedImage histograma;
     private BufferedImage projecaoVertical;
     private BufferedImage projecaoHorizontal;
+    private BufferedImage subtracao;
     private ImageIcon icon;
     private ImageIcon iconResultado;
     private ImageIcon iconProjecaoHorizontal;
     private ImageIcon iconProjecaoVertical;
     private ImageIcon iconHistograma;
+    private ImageIcon iconSubtracao;
     
     public void exibir(){
         icon =  new ImageIcon(imagem);
@@ -31,6 +33,7 @@ public class Formulario {
         iconProjecaoHorizontal = new ImageIcon(projecaoHorizontal);
         iconProjecaoVertical = new ImageIcon(projecaoVertical);
         iconHistograma = new ImageIcon(histograma);
+        iconSubtracao = new ImageIcon(subtracao);
         JFrame f = new JFrame("Imagem");
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         //System.out.println(d.width+"x"+d.height);
@@ -40,15 +43,17 @@ public class Formulario {
         JLabel lblProjecaoHorizontal = new JLabel();
         JLabel lblProjecaoVertical = new JLabel();
         JLabel lblHistograma = new JLabel();
+        JLabel lblSubtracao = new JLabel();
         lblImagem.setIcon(icon);
         lblImagemResultado.setIcon(iconResultado);
         lblProjecaoHorizontal.setIcon(iconProjecaoHorizontal);
         lblProjecaoVertical.setIcon(iconProjecaoVertical);
         lblHistograma.setIcon(iconHistograma);
-        
+        lblSubtracao.setIcon(iconSubtracao);
         
         p.add(lblImagem);
         p.add(lblImagemResultado, BorderLayout.EAST);
+        p.add(lblSubtracao);
         //p.add(lblProjecaoHorizontal);
         //p.add(lblProjecaoVertical);
         //p.add(lblHistograma);
@@ -81,6 +86,10 @@ public class Formulario {
 	public void setProjecaoHorizontal(BufferedImage projecaoHorizontal) {
 		this.projecaoHorizontal = projecaoHorizontal;
 	}
+        
+        public void setSubtracao(BufferedImage imagemSubtracao){
+            this.subtracao = imagemSubtracao;
+        }
     
     
    
