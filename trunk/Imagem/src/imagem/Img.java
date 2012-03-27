@@ -22,7 +22,7 @@ public class Img {
 	 * @param imagem
 	 * @return
 	 */
-    public int[][][]  lerArquivo(BufferedImage imagem) {
+    public int[][][]  lerArquivoRgb(BufferedImage imagem) {
     	int[][][] matriz;
         largura = imagem.getWidth();
         altura = imagem.getHeight();
@@ -41,6 +41,27 @@ public class Img {
         return matriz;
         
     }
+    
+    public int[][]  lerArquivo(BufferedImage imagem) {
+    	int[][] matriz;
+        largura = imagem.getWidth();
+        altura = imagem.getHeight();
+        matriz = new int[largura][altura];
+        /*
+         * Percore a matriz de cima para baixo da esquerda para a direita
+         */
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                Color pixel = new Color(imagem.getRGB(coluna, linha));
+                matriz[coluna][linha] = (pixel.getRed()+pixel.getGreen()+pixel.getBlue())/3;
+            }
+        }
+        return matriz;
+        
+    }
+    
+    
+    
     /**
      * 
      * @param matriz
@@ -1087,6 +1108,24 @@ public class Img {
 			System.out.println(i);
 		}*/
     	
+    }
+    
+    public int[][] subtrairMatriz(int[][][] matrizAnterior, int[][][] matrizAtual){
+        int[][] matrizRetorno = new int[largura][altura];
+        brancoMatriz(matrizRetorno);
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                if(matrizAnterior[coluna][linha][0] != matrizAtual[coluna][linha][0]){
+                    matrizRetorno[coluna][linha] =  255;
+                    
+                } else {
+                    matrizRetorno[coluna][linha] = 0;
+                }
+               
+            }
+        }
+        
+        return matrizRetorno; 
     }
     
     /**

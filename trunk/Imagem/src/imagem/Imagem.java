@@ -10,29 +10,48 @@ public class Imagem {
 	
 	
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         long agora = System.currentTimeMillis();
-        String arquivo = "lego1.jpg";
+        
+        for(int k = 1; k < 23; k++){
+            Thread.sleep(200);
+            String arquivo;
+            String arquivo1;
+         if(k<10)
+            arquivo = "imgs-rastreamento/0"+k+".jpg";
+         else
+             arquivo = "imgs-rastreamento/"+k+".jpg";
+         
+        if(k+1 <10)
+            arquivo1 = "imgs-rastreamento/0"+(k+1)+".jpg";
+        else
+            arquivo1 = "imgs-rastreamento/"+(k+1)+".jpg";
        
     	BufferedImage imagem = ImageIO.read(new File(arquivo));
-        BufferedImage imagemResultado = ImageIO.read(new File(arquivo));
+        BufferedImage imagemResultado = ImageIO.read(new File(arquivo1));
        
         int[][][] matriz;
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        matriz = i.lerArquivo(imagem);
+        matriz = i.lerArquivoRgb(imagem);
         /**
          * Usado onde for nescessario usar uma mascara
          */
         int[][][] matrizResultado;
-        matrizResultado = i.lerArquivo(imagem);
+        matrizResultado = i.lerArquivoRgb(imagemResultado);
         
         
         int[][] matrizRegioes = new int[i.getLargura()][i.getAltura()];
         i.zerarMatriz(matrizRegioes);
         
-        //i.cinza(matriz, matriz);
-        i.negativo(matriz, matriz);
+        int[][] matrizSubtracao = new int[i.getLargura()][i.getAltura()];
+        
+        i.limiar_threshould(200, matriz, matriz);
+        i.limiar_threshould(200, matrizResultado, matrizResultado);
+        
+        matrizSubtracao = i.subtrairMatriz(matriz, matrizResultado);
+        
+        
         
         //i.contraste(2.9, matriz, matriz);
         //i.cinza(matriz, matriz);
@@ -75,6 +94,10 @@ public class Imagem {
         i.projecaoVertical(matriz, projecaoVertical);
         int[][] histograma = new int[256][101];
         BufferedImage graficoHistograma = new BufferedImage(256, 101, BufferedImage.TYPE_INT_RGB );
+        
+        BufferedImage imagemSubtracao = new BufferedImage(i.getLargura(), i.getAltura(), BufferedImage.TYPE_INT_RGB );
+
+        
         i.histograma(matriz, histograma);
         //Da matriz para o buffer
         i.lerMatriz(matriz, imagem);
@@ -82,8 +105,9 @@ public class Imagem {
         i.lerMatriz(projecaoHorizontal, grficoProjecaoHorizontal);
         i.lerMatriz(projecaoVertical, grficoProjecaoVertical);
         i.lerHistograma(histograma, graficoHistograma);
+        i.lerMatriz(matrizSubtracao, imagemSubtracao);
         
-        i.salvar(imagem, "lego-negativo-cor");
+        //i.salvar(imagem, "lego-negativo-cor");
 
         Formulario f = new Formulario();
         f.setImagem(imagem);
@@ -91,10 +115,13 @@ public class Imagem {
         f.setProjecaoHorizontal(grficoProjecaoHorizontal);
         f.setProjecaoVertical(grficoProjecaoVertical);
         f.setHistograma(graficoHistograma);
+        f.setSubtracao(imagemSubtracao);
+        
         f.exibir();
 
+        
+        }
         System.out.println("Demorou " + (System.currentTimeMillis() - agora));
-
 
 
     }
