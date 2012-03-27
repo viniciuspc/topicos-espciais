@@ -929,7 +929,7 @@ public class Img {
         
         do{
         	teveTroca = false;
-	        ArrayList<Integer> listaRelacaoCopia = new ArrayList<>(listaRelacao);
+	        ArrayList<Integer> listaRelacaoCopia = new ArrayList<Integer>(listaRelacao);
 	        for (int i = 1; i<listaRelacaoCopia.size(); i++) {
 	        	if(i != listaRelacaoCopia.get(i)){
 	        		if(listaRelacaoCopia.get(listaRelacao.get(i)) != listaRelacao.get(i) ){
@@ -949,7 +949,7 @@ public class Img {
         
         
         
-        //Lê a listaRelacao e substitui na matrizRegioes
+        //Lï¿½ a listaRelacao e substitui na matrizRegioes
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
             	if(matrizRegioes[coluna][linha] != 0)
