@@ -382,4 +382,32 @@ public class Visao {
         }
         return matriz;
     }
+    
+    public int[][][] pele(int[][][] matriz){
+        int largura = matriz.length;
+        int altura = matriz[0].length;
+        int[][][] matrizRetorno = new int[largura][altura][3];
+        
+        for (int linha = 1; linha < altura - 1; linha++) {
+            for (int coluna = 1; coluna < largura - 1; coluna++) {
+                int r = matriz[coluna][linha][0];
+                int g = matriz[coluna][linha][1];
+                int b = matriz[coluna][linha][2];
+                
+                if(r>95 && g>40 && b>20 && (r-g) > 15 && r>b && 
+                        (Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b)) > 15){
+                    matrizRetorno[coluna][linha][0] = r;
+                    matrizRetorno[coluna][linha][1] = g;
+                    matrizRetorno[coluna][linha][2] = b;
+                } else{
+                    matrizRetorno[coluna][linha][0] = 0;
+                    matrizRetorno[coluna][linha][1] = 0;
+                    matrizRetorno[coluna][linha][2] = 0;
+                }
+                
+            }
+        }
+
+        return matrizRetorno;
+    }
 }

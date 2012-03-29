@@ -8,14 +8,13 @@ public class Imagem {
         Visao visao = new Visao();
 
 
-        int[][] matriz01 = visao.fpa_Sobel(visao.arquivo_Matriz("files/imagem.jpg"));
-        int[][] matriz02 = visao.copiar_Matriz(visao.arquivo_Matriz("files/imagem.jpg"));
+        int[][][] matriz01 = visao.arquivo_Matriz_Rgb("files/pessoa.jpeg");
+        int[][][] matriz02 = visao.arquivo_Matriz_Rgb("files/pessoa.jpeg");
         //visao.binariza(matriz02, 127);
-        int[][] matriz03 = visao.soma(matriz01, matriz02);
-        visao.negativo(matriz03);
+        int[][][] matriz03 = visao.pele(matriz01);
         
-        
-        visao.negativo(matriz03);
+        visao.matriz_Arquivo_Rgb(matriz03, "resultado_05.jpg");
+
 
 
 
@@ -23,9 +22,9 @@ public class Imagem {
 
         //Instancia e exibe formulario com duas imagens
         Formulario f = new Formulario();
-        f.setImagem1(visao.matriz_Imagem(matriz01));
-        f.setImagem2(visao.matriz_Imagem(matriz02));
-        f.setImagem3(visao.matriz_Imagem(matriz03));
+        f.setImagem1(visao.matriz_Imagem_Rgb(matriz01));
+        f.setImagem2(visao.matriz_Imagem_Rgb(matriz02));
+        f.setImagem3(visao.matriz_Imagem_Rgb(matriz03));
         f.exibir();
     }
 }
