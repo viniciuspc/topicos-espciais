@@ -394,7 +394,7 @@ public class Visao {
                 int g = matriz[coluna][linha][1];
                 int b = matriz[coluna][linha][2];
                 
-                if(r>95 && g>40 && b>20 && (r-g) > 15 && r>b && 
+                if(r>95 && g>40 && b>20 && (r-g) > 15 && r>b && +
                         (Math.max(Math.max(r, g), b) - Math.min(Math.min(r, g), b)) > 15){
                     matrizRetorno[coluna][linha][0] = r;
                     matrizRetorno[coluna][linha][1] = g;
