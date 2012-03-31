@@ -28,7 +28,9 @@ public class Camera {
 
         IplImage frame = grabber.grab();
         OpenCVFrameRecorder recorder = new OpenCVFrameRecorder("teste.avi", frame.width(), frame.height());
+        recorder.setFrameRate(CV_CAP_PROP_FPS);
        	recorder.start();
+       	
         
         IplImage imageSobel = null;
         IplImage imagePrewitt = null;
@@ -74,9 +76,11 @@ public class Camera {
         	processadorImagem.lerMatrizRgb(resultadoPele, peleBuffer);
         	
         	//frame = IplImage.createFrom(peleBuffer);
+        	recorder.record(frame);
         	
         	cvCvtColor(frame, imageSobel, CV_RGB2GRAY);
         	canvasFrameSobel.showImage(frame);
+        	
         	
         	//canvasFramePrewitt.showImage(imagePrewitt);
         }
