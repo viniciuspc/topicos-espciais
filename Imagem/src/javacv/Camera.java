@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.FrameGrabber.Exception;
 import com.googlecode.javacv.OpenCVFrameGrabber;
+import com.googlecode.javacv.OpenCVFrameRecorder;
 import com.googlecode.javacv.cpp.opencv_core.CvMemStorage;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import com.googlecode.javacv.cpp.opencv_highgui.CvCapture;
@@ -19,11 +20,16 @@ import static com.googlecode.javacv.cpp.opencv_highgui.*;
 
 public class Camera {
 	
-	public static void main(String args[]) throws Exception{
+	public static void main(String args[]) throws Exception, java.lang.Exception{
 		OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
         grabber.start();
+        
+        
 
         IplImage frame = grabber.grab();
+        OpenCVFrameRecorder recorder = new OpenCVFrameRecorder("teste.avi", frame.width(), frame.height());
+       	recorder.start();
+        
         IplImage imageSobel = null;
         IplImage imagePrewitt = null;
         IplImage prevImage = null;
@@ -67,15 +73,18 @@ public class Camera {
         	processadorImagem.lerMatrizRgb(prewittMatriz, prewittBuffer);
         	processadorImagem.lerMatrizRgb(resultadoPele, peleBuffer);
         	
-        	frame = IplImage.createFrom(peleBuffer);
+        	//frame = IplImage.createFrom(peleBuffer);
         	
         	cvCvtColor(frame, imageSobel, CV_RGB2GRAY);
-        	canvasFrameSobel.showImage(imageSobel);
+        	canvasFrameSobel.showImage(frame);
+        	
         	//canvasFramePrewitt.showImage(imagePrewitt);
         }
-        
-        grabber.stop();
         canvasFrameSobel.dispose();
+        recorder.stop();
+        grabber.stop();
+        
+        
         //canvasFramePrewitt.dispose();
 
 	
