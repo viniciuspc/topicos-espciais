@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageTypeSpecifier;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,18 +15,19 @@ import javax.swing.JScrollPane;
 
 public class Formulario {
     
-    private BufferedImage imagem;
-    private BufferedImage imagemResultado;
-    private BufferedImage histograma;
-    private BufferedImage projecaoVertical;
-    private BufferedImage projecaoHorizontal;
-    private BufferedImage subtracao;
+    private BufferedImage imagem = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage imagemResultado = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage histograma = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage projecaoVertical = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage projecaoHorizontal = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage subtracao = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
     private ImageIcon icon;
     private ImageIcon iconResultado;
     private ImageIcon iconProjecaoHorizontal;
     private ImageIcon iconProjecaoVertical;
     private ImageIcon iconHistograma;
     private ImageIcon iconSubtracao;
+    private JFrame f = new JFrame("Imagem");
     
     public void exibir(){
         icon =  new ImageIcon(imagem);
@@ -34,7 +36,7 @@ public class Formulario {
         iconProjecaoVertical = new ImageIcon(projecaoVertical);
         iconHistograma = new ImageIcon(histograma);
         iconSubtracao = new ImageIcon(subtracao);
-        JFrame f = new JFrame("Imagem");
+        
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         //System.out.println(d.width+"x"+d.height);
         JPanel p = new JPanel();
@@ -64,10 +66,16 @@ public class Formulario {
         
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
-        f.setVisible(true);
+        
     }
+    
+    public JFrame getJFrame() {
+		return f;
+	}
 
-    public void setImagem(BufferedImage imagem) {
+
+
+	public void setImagem(BufferedImage imagem) {
         this.imagem = imagem;
     }
 

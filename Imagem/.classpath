@@ -11,5 +11,11 @@
 	<classpathentry kind="lib" path="jfreechart-lib/junit.jar"/>
 	<classpathentry kind="lib" path="jfreechart-lib/servlet.jar"/>
 	<classpathentry kind="lib" path="jfreechart-lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="javacv-bin/javacpp.jar"/>
+	<classpathentry kind="lib" path="javacv-bin/javacv-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="javacv-bin/javacv.jar"/>
+	<classpathentry kind="lib" path="javacv-bin/jna.jar"/>
+	<classpathentry kind="lib" path="javacv-bin/platform.jar"/>
+	<classpathentry kind="lib" path="javacv-bin/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

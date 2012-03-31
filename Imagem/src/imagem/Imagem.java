@@ -12,6 +12,9 @@ public class Imagem {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         long agora = System.currentTimeMillis();
+        Formulario f = new Formulario();
+        f.getJFrame().setVisible(true);
+        
         
         for(int k = 1; k < 23; k++){
             Thread.sleep(200);
@@ -109,15 +112,15 @@ public class Imagem {
         
         //i.salvar(imagem, "lego-negativo-cor");
 
-        Formulario f = new Formulario();
+        
         f.setImagem(imagem);
         f.setImagemResultado(imagemResultado);
         f.setProjecaoHorizontal(grficoProjecaoHorizontal);
         f.setProjecaoVertical(grficoProjecaoVertical);
         f.setHistograma(graficoHistograma);
         f.setSubtracao(imagemSubtracao);
-        
         f.exibir();
+        
 
         
         }
