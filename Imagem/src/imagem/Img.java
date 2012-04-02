@@ -1128,6 +1128,24 @@ public class Img {
         return matrizRetorno; 
     }
     
+    public int[][] subtracao(int[][][] matrizAnterior, int[][][] matrizAtual){
+    	int[][] matrizRetorno = new int[largura][altura];
+        brancoMatriz(matrizRetorno);
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int valor = Math.abs(matrizAnterior[coluna][linha][0] - matrizAtual[coluna][linha][0]);
+                matrizRetorno[coluna][linha] = valor;
+                
+            }
+        }
+        
+        return matrizRetorno;
+        
+        
+    }
+    
+    
+    
     /**
      * 
      * @param matriz 

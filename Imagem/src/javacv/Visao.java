@@ -289,6 +289,7 @@ public class Visao {
                 matriz[coluna][linha] = valor;
             }
         }
+        
     }
 
     // Negativo
@@ -476,6 +477,49 @@ public class Visao {
         }
 
         return matrizRetorno;
+    }
+    
+    public int[][] subtrairMatriz(int[][] matrizAnterior, int[][] matrizAtual){
+    	int largura = matrizAtual.length;
+        int altura = matrizAnterior[0].length;
+        int[][] matrizRetorno = new int[largura][altura];
+        brancoMatriz(matrizRetorno);
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                if(matrizAnterior[coluna][linha] != matrizAtual[coluna][linha]){
+                    matrizRetorno[coluna][linha] =  255;
+                    
+                } else {
+                    matrizRetorno[coluna][linha] = 0;
+                }
+               
+            }
+        }
+        
+        return matrizRetorno; 
+    }
+    
+    public void brancoMatriz(int[][] matriz){
+    	int largura = matriz.length;
+        int altura = matriz[0].length;
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                matriz[coluna][linha] = 255;
+            }
+        }
+    }
+    
+    public void copiar(int[][] matrizOriginal, int[][] matriz){
+    	int largura = matriz.length;
+        int altura = matriz[0].length;
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int c = matrizOriginal[coluna][linha];
+                
+                matriz[coluna][linha] = c;
+                
+            }
+        }
     }
     
     
