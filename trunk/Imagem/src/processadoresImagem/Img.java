@@ -1115,12 +1115,17 @@ public class Img {
         brancoMatriz(matrizResultado);
         
         double nPontos = matriz.length * matriz[0].length;
-        int nTonsDeCinza = 255;
+        int nTonsDeCinza = 256;
         double x = nPontos/nTonsDeCinza;
-        int[] vetorTonsCinza = new int[nTonsDeCinza+1];
+        int[] vetorTonsCinza = new int[nTonsDeCinza];
+        int[] vetorResultado = new int[nTonsDeCinza];
+        int acc = 0;
+        
         for(int i = 0; i<vetorTonsCinza.length; i++){
             vetorTonsCinza[0] = 0;
+            vetorResultado[0] = 0;
         }
+        
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
                 vetorTonsCinza[matriz[coluna][linha]] += 1;
@@ -1128,8 +1133,14 @@ public class Img {
         }
         
         for(int i = 0; i<vetorTonsCinza.length; i++){
+            acc += vetorTonsCinza[i];
+        }
+
+        for(int i = 0; i<vetorTonsCinza.length; i++){
             System.out.println(i+" - "+vetorTonsCinza[i]);
         }
+        
+        
         
         return matrizResultado;
         
