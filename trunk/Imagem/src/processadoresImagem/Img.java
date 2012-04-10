@@ -1,4 +1,4 @@
-package imagem;
+package processadoresImagem;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -1108,6 +1108,32 @@ public class Img {
 			System.out.println(i);
 		}*/
     	
+    }
+    
+    public int[][] equalizacao(int[][] matriz){
+        int[][] matrizResultado = new int[largura][altura];
+        brancoMatriz(matrizResultado);
+        
+        double nPontos = matriz.length * matriz[0].length;
+        int nTonsDeCinza = 255;
+        double x = nPontos/nTonsDeCinza;
+        int[] vetorTonsCinza = new int[nTonsDeCinza+1];
+        for(int i = 0; i<vetorTonsCinza.length; i++){
+            vetorTonsCinza[0] = 0;
+        }
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                vetorTonsCinza[matriz[coluna][linha]] += 1;
+            }
+        }
+        
+        for(int i = 0; i<vetorTonsCinza.length; i++){
+            System.out.println(i+" - "+vetorTonsCinza[i]);
+        }
+        
+        return matrizResultado;
+        
+        
     }
     
     public int[][] subtrairMatriz(int[][][] matrizAnterior, int[][][] matrizAtual){

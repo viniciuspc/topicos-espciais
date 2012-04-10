@@ -1,5 +1,6 @@
 package javacv;
 
+import processadoresImagem.Visao;
 import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_8U;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_RGB2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;

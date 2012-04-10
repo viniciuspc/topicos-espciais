@@ -1,5 +1,6 @@
 package javacv;
 
+import processadoresImagem.Visao;
 import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_8U;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_RGB2GRAY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.CV_THRESH_BINARY;
@@ -52,7 +53,7 @@ public class Camera {
         int[][][] peleMatriz;
         BufferedImage peleBuffer;
 
-        CanvasFrame canvasFrameTecnica1 = new CanvasFrame("Binarização - Limiar 200");
+        CanvasFrame canvasFrameTecnica1 = new CanvasFrame("Binariza??o - Limiar 200");
         canvasFrameTecnica1.setCanvasSize(frame.width(), frame.height());
         
         

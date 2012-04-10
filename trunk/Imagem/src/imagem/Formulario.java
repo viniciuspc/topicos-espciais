@@ -69,6 +69,37 @@ public class Formulario {
         
     }
     
+    public void exibir2(){
+        icon =  new ImageIcon(imagem);
+        iconResultado =  new ImageIcon(imagemResultado);
+        
+        
+        
+        //System.out.println(d.width+"x"+d.height);
+        JPanel p = new JPanel();
+        JLabel lblImagem = new JLabel();
+        JLabel lblImagemResultado = new JLabel();
+        
+        lblImagem.setIcon(icon);
+        lblImagemResultado.setIcon(iconResultado);
+        
+        
+        p.add(lblImagem);
+        p.add(lblImagemResultado, BorderLayout.EAST);
+       
+        //p.add(lblProjecaoHorizontal);
+        //p.add(lblProjecaoVertical);
+        //p.add(lblHistograma);
+        f.add(p);
+        
+        JScrollPane scrollBar=new JScrollPane(p,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        f.add(scrollBar);
+        
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.pack();
+        
+    }
+    
     public JFrame getJFrame() {
 		return f;
 	}

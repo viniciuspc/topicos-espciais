@@ -1,5 +1,6 @@
 package imagem;
 
+import processadoresImagem.Img;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +10,25 @@ import javax.imageio.ImageIO;
 public class Imagem {
 	
 	
+    public static void main (String[] args) throws Exception{
+        BufferedImage imagem = ImageIO.read(new File("imagem.jpg"));
+        BufferedImage imagemResultado = ImageIO.read(new File("imagem.jpg"));
+        Img i = new Img();
+        int[][] matriz = i.lerArquivo(imagem);
+        int[][] matrizResultado = i.equalizacao(matriz);
+        Formulario f = new Formulario();
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+        i.lerMatriz(matriz, imagem);
+        i.lerMatriz(matrizResultado, imagemResultado);
+        f.setImagem(imagem);
+        f.setImagemResultado(imagemResultado);
+        
+        f.exibir2();
+        f.getJFrame().setVisible(true);
+        
+    }
+
+    public static void main_(String[] args) throws IOException, InterruptedException {
         long agora = System.currentTimeMillis();
         Formulario f = new Formulario();
         f.getJFrame().setVisible(true);
@@ -128,4 +146,5 @@ public class Imagem {
 
 
     }
+
 }

@@ -1,4 +1,4 @@
-package javacv;
+package processadoresImagem;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -521,6 +521,8 @@ public class Visao {
             }
         }
     }
+    
+    
     
     
 }
