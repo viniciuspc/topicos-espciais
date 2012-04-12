@@ -7,6 +7,12 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.imageio.ImageIO;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * @author Vinicius
@@ -1050,6 +1056,23 @@ public class Img {
     	
     }
     
+    public int[][] histograma(int[][] matriz){
+        int hg[][] = new int[256][3];
+        int largura = matriz.length;
+        int altura = matriz[0].length;
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int r = matriz[coluna][linha];
+                int g = matriz[coluna][linha];
+                int b = matriz[coluna][linha];
+                hg[r][0]++;
+                hg[g][1]++;
+                hg[b][2]++;
+            }
+        }
+        return hg;
+    }
+    
     public void projecaoVertical(int[][][] matriz, int[][] projecaoVertical){
     	final int NUM_PIXEL = largura*altura;
     	System.out.println(NUM_PIXEL);
@@ -1083,7 +1106,6 @@ public class Img {
     	final int NUM_PIXEL = largura*altura;
     	System.out.println(NUM_PIXEL);
     	int[] arrayHorizontal = new int[altura+1];
-    	
     	brancoMatriz(projecaoHorizontal);
     	
     	for (int linha = 0; linha < altura; linha++) {
@@ -1101,6 +1123,8 @@ public class Img {
     		}
     		
     	}
+        
+        
     	
     	/*
     	for (int i : arrayHorizontal) {
@@ -1109,7 +1133,7 @@ public class Img {
 		}*/
     	
     }
-    
+    /*
     public int[][] equalizacao(int[][] matriz){
         int[][] matrizResultado = new int[largura][altura];
         brancoMatriz(matrizResultado);
@@ -1118,12 +1142,12 @@ public class Img {
         int nTonsDeCinza = 256;
         double x = nPontos/nTonsDeCinza;
         int[] vetorTonsCinza = new int[nTonsDeCinza];
-        int[] vetorResultado = new int[nTonsDeCinza];
+        
         int acc = 0;
         
         for(int i = 0; i<vetorTonsCinza.length; i++){
             vetorTonsCinza[0] = 0;
-            vetorResultado[0] = 0;
+            
         }
         
         for (int linha = 0; linha < altura; linha++) {
@@ -1136,8 +1160,9 @@ public class Img {
             acc += vetorTonsCinza[i];
         }
 
+        int[] vetorResultado = getHistogramaEqualizado(vetorTonsCinza);
         for(int i = 0; i<vetorTonsCinza.length; i++){
-            System.out.println(i+" - "+vetorTonsCinza[i]);
+            System.out.println(i+" - "+vetorTonsCinza[i]+"\t\t"+vetorResultado[i]);
         }
         
         
@@ -1145,6 +1170,174 @@ public class Img {
         return matrizResultado;
         
         
+    }
+    
+    public static int[] getHistogramaEqualizado(int[] histograma) {
+        int totalPontos = 0;
+
+        int[] histogramaEqualizado = new int[256];
+        
+        float[] somatorio = new float[256];
+
+        for (int i = 0; i < 256; i++) {
+            totalPontos += histograma[i];
+            somatorio[i] = totalPontos;
+        }
+
+        float pontosPorTom = 255f / (float) totalPontos;
+
+        for (int i = 0; i < 256; i++) {
+            somatorio[i] *= pontosPorTom;
+
+            histogramaEqualizado[Math.round(somatorio[i])] += histograma[i];
+        }
+        
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        for(int c = 0; c < 256; c++){
+            dataset2.setValue(histogramaEqualizado[c], "Vertical", String.valueOf(c));
+            dataset.setValue(histograma[c], "Vertical", String.valueOf(c));
+            System.out.println("v[" + c + "] = " + histogramaEqualizado[c]);
+        }
+       
+        JFreeChart chart = ChartFactory.createBarChart("Histograma","Horizontal", "Vertical", dataset, PlotOrientation.VERTICAL, false,true, false);
+        chart.setBackgroundPaint(Color.white);
+        chart.getTitle().setPaint(Color.blue);
+        CategoryPlot p = chart.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.red);
+        ChartFrame frame1 = new ChartFrame("Bar Chart",chart);
+        frame1.setVisible(true);
+        frame1.setSize(800, 600);
+        
+        
+        JFreeChart chart2 = ChartFactory.createBarChart("Histograma Equalizado","Horizontal", "Vertical", dataset2, PlotOrientation.VERTICAL, false,true, false);
+        chart.setBackgroundPaint(Color.white);
+        chart.getTitle().setPaint(Color.blue);
+        CategoryPlot p2 = chart2.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.red);
+        ChartFrame frame2 = new ChartFrame("Bar Chart",chart2);
+        frame2.setVisible(true);
+        frame2.setSize(800, 600);
+        
+        
+        
+        
+
+        return histogramaEqualizado;
+    }*/
+    public int[][] equalizar(int[][] imagem){ //recebe imagem original
+        int hg[][]; //histograma da imagem
+        int he[][] = new int[256][1]; //Mapa da equalização.
+        int result[][] = new int[imagem.length][imagem[0].length]; //imagem equalizado
+       
+        double cdf[] = new double[256]; //Cumulativo
+        int i,j, k,n;
+        hg = histograma(imagem); //gera histograma da imagem original
+        n = imagem.length * imagem[0].length; //pega qtd total de pixels da imagem
+       
+        cdf[0] = hg[0][0];
+        for (i=1;i<256;i++) {       // cdf of image
+            cdf[i] = cdf[i-1] + hg[i][0];
+            he[i][0]=(int)Math.round(cdf[i]/n*255); //monta o mapa
+        }
+       
+        for(i=0;i<imagem.length;i++) { //pega o mapa e transforma a imagem
+            for(j=0;j<imagem[0].length;j++) {
+                k = imagem[i][j];
+                result[i][j] = (int)(he[k][0]);
+            }
+        }
+        
+         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        for(int c = 0; c < 256; c++){
+            dataset2.setValue(cdf[c], "Vertical", String.valueOf(c));
+            //dataset.setValue(histograma[c], "Vertical", String.valueOf(c));
+            
+        }
+       
+        JFreeChart chart = ChartFactory.createBarChart("Histograma","Horizontal", "Vertical", dataset, PlotOrientation.VERTICAL, false,true, false);
+        chart.setBackgroundPaint(Color.white);
+        chart.getTitle().setPaint(Color.blue);
+        CategoryPlot p = chart.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.red);
+        ChartFrame frame1 = new ChartFrame("Bar Chart",chart);
+        frame1.setVisible(true);
+        frame1.setSize(800, 600);
+        
+        
+        JFreeChart chart2 = ChartFactory.createBarChart("Histograma Equalizado","Horizontal", "Vertical", dataset2, PlotOrientation.VERTICAL, false,true, false);
+        chart.setBackgroundPaint(Color.white);
+        chart.getTitle().setPaint(Color.blue);
+        CategoryPlot p2 = chart2.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.red);
+        ChartFrame frame2 = new ChartFrame("Bar Chart",chart2);
+        frame2.setVisible(true);
+        frame2.setSize(800, 600);
+       
+        return result; //devolve imagem equalizado
+    }
+    /*
+    public void equalizacao(int[][] matriz){
+        int largura = matriz.length;
+        int altura = matriz[0].length;
+        int[] v1 = new int[256];
+        for(int c = 0; c < 256; c++){
+            v1[c] = 0;
+        }
+       
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+       
+        for(int coluna = 0; coluna < largura; coluna++){           
+            for(int linha = 0; linha < altura; linha++){
+                int posicao = matriz[coluna][linha];
+                v1[posicao]++;
+            }
+        }
+        for(int c = 0; c < 256; c++){
+            dataset.setValue(v1[c], "Vertical", String.valueOf(c));
+            System.out.println("v[" + c + "] = " + v1[c]);
+        }
+       
+        JFreeChart chart = ChartFactory.createBarChart("Projeção Vertical","Horizontal", "Vertical", dataset, PlotOrientation.VERTICAL, false,true, false);
+        chart.setBackgroundPaint(Color.white);
+        chart.getTitle().setPaint(Color.blue);
+        CategoryPlot p = chart.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.red);
+        ChartFrame frame1 = new ChartFrame("Bar Chart",chart);
+        frame1.setVisible(true);
+        frame1.setSize(800, 600);
+
+    }
+    */
+    public void projecaoVertical(int[][] matriz){
+
+        int largura = matriz.length;
+        int altura = matriz[0].length;
+       
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+       
+        for(int coluna = 0; coluna < largura; coluna++){
+            long cont = 0;
+
+            for(int linha = 0; linha < altura; linha++){
+                if(matriz[coluna][linha] == 0){
+                    cont++;
+                }
+            }
+            dataset.setValue(cont, "Vertical", String.valueOf(coluna));
+
+        }
+       
+        JFreeChart chart = ChartFactory.createBarChart("Projeção Vertical","Horizontal", "Vertical", dataset, PlotOrientation.VERTICAL, false,true, false);
+        chart.setBackgroundPaint(Color.white);
+        chart.getTitle().setPaint(Color.blue);
+        CategoryPlot p = chart.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.red);
+        ChartFrame frame1 = new ChartFrame("Bar Chart",chart);
+        frame1.setVisible(true);
+        frame1.setSize(1024, 768);
     }
     
     public int[][] subtrairMatriz(int[][][] matrizAnterior, int[][][] matrizAtual){
