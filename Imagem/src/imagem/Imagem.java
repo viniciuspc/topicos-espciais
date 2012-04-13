@@ -11,16 +11,13 @@ public class Imagem {
 	
 	
     public static void main (String[] args) throws Exception{
-        BufferedImage imagem = ImageIO.read(new File("imagem2.jpg"));
-        BufferedImage imagemResultado = ImageIO.read(new File("imagem2.jpg"));
+        BufferedImage imagem = ImageIO.read(new File("imagem3.jpg"));
+        BufferedImage imagemResultado = ImageIO.read(new File("imagem3.jpg"));
         Img i = new Img();
-        int[][] matriz = i.lerArquivo(imagem);
-        int[][] matrizResultado = i.equalizar(matriz);
+        int[][][] matriz = i.lerArquivoRgb(imagem);
+        int[][][] matrizResultado = i.equalizar_rgb(matriz);
         Formulario f = new Formulario();
-        /*
-        i.projecaoVertical(matriz);
-        i.equalizacao(matriz);
-        */
+        
         i.lerMatriz(matriz, imagem);
         i.lerMatriz(matrizResultado, imagemResultado);
         f.setImagem(imagem);
