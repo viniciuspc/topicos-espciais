@@ -67,8 +67,8 @@ public class Imagem {
         
         int[][] matrizSubtracao = new int[i.getLargura()][i.getAltura()];
         
-        i.limiar_threshould(200, matriz, matriz);
-        i.limiar_threshould(200, matrizResultado, matrizResultado);
+        i.limiar_threshould_rgb(200, matriz, matriz);
+        i.limiar_threshould_rgb(200, matrizResultado, matrizResultado);
         
         matrizSubtracao = i.subtrairMatriz(matriz, matrizResultado);
         
