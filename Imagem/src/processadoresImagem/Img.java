@@ -263,7 +263,7 @@ public class Img {
      * @param matriz
      * 
      */
-    public void limiar_threshould(int limiar, int[][][] matrizOrigem, int[][][] matriz){
+    public void limiar_threshould_rgb(int limiar, int[][][] matrizOrigem, int[][][] matriz){
     	int[][][] matrizAux = new int[largura][altura][3];
     	copiar(matrizOrigem, matrizAux);
         for (int linha = 0; linha < altura; linha++) {
@@ -288,6 +288,30 @@ public class Img {
                     matriz[coluna][linha][2] = 0;
             }
         }
+    }
+    
+    /**
+     * Binarizacao usar com tons de cinza
+     * @param limiar
+     * @param matrizOriginal
+     * @param matriz
+     * 
+     */
+    public int[][] limiar_threshould(int limiar, int[][] matriz){
+    	int[][] matrizAux = new int[largura][altura];
+    	brancoMatriz(matrizAux);
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                int c = matriz[coluna][linha];
+                
+                if(c > limiar)
+                	matrizAux[coluna][linha] = 255;
+                else
+                	matrizAux[coluna][linha] = 0;
+                
+            }
+        }
+        return matrizAux;
     }
     
     /**
@@ -1386,6 +1410,22 @@ public class Img {
                 matriz[coluna][linha][2] = b;
             }
         }
+    }
+    
+    public int[][] otsu(int[][] matriz){
+    	byte[] srcData = new byte[matriz.length*matriz[0].length];
+    	int c = 0;
+    	for (int linha = 0; linha < matriz[0].length; linha++) {
+            for (int coluna = 0; coluna < matriz.length; coluna++) {
+            	srcData[c] = (byte) matriz[coluna][linha];
+            	c++;
+            }
+    	}
+    	OtsuThresholder otsu = new OtsuThresholder();
+    	int threshold = otsu.doThreshold(srcData);
+    	System.out.println("Limiar calculado: "+threshold);
+    	return limiar_threshould(threshold, matriz);
+    	
     }
 
     public int getAltura() {
