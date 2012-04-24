@@ -15,8 +15,8 @@ import processadoresImagem.Img;
  */
 public class VarianciaMain {
    public static void main (String[] args) throws Exception{
-        BufferedImage imagem = ImageIO.read(new File("imagem3.jpg"));
-        BufferedImage imagemResultado = ImageIO.read(new File("imagem3.jpg"));
+        BufferedImage imagem = ImageIO.read(new File("imagem.jpg"));
+        BufferedImage imagemResultado = ImageIO.read(new File("imagem.jpg"));
         Img i = new Img();
         int[][] matriz = i.lerArquivo(imagem);
         System.out.println(i.vlMedio(matriz));
@@ -26,7 +26,7 @@ public class VarianciaMain {
         Formulario f = new Formulario();
         
         i.lerMatriz(matriz, imagem);
-        //i.lerMatriz(matrizResultado, imagemResultado);
+        i.lerMatriz(matrizResultado, imagemResultado);
         f.setImagem(imagem);
         f.setImagemResultado(imagemResultado);
         
