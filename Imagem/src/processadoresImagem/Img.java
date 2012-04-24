@@ -1427,6 +1427,31 @@ public class Img {
     	return limiar_threshould(threshold, matriz);
     	
     }
+    
+    public int vlMedio(int[][] matriz){
+        int nPixel = matriz.length * matriz[0].length;
+        int m = 0;
+        int[] hist = histograma(matriz);
+        for(int i = 0; i < hist.length; i++){
+            m = m+(hist[i]*i);
+        }
+        m = m/nPixel;
+        
+        return m;
+    }
+    
+    public int variancia(int[][] matriz){
+        int nPixel = matriz.length * matriz[0].length;
+        int v = 0;
+        int m = vlMedio(matriz);
+        int[] hist = histograma(matriz);
+        for(int i = 0; i < hist.length; i++){
+            
+            v = (int) (v+(hist[i]*(Math.pow((i-m),2))));
+        }
+        v = (int) Math.sqrt(v);
+        return v;
+    }
 
     public int getAltura() {
         return altura;
