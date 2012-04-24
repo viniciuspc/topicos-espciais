@@ -21,6 +21,8 @@ public class VarianciaMain {
         int[][] matriz = i.lerArquivo(imagem);
         System.out.println(i.vlMedio(matriz));
         System.out.println(i.variancia(matriz));
+        i.otsu(matriz);
+        
         Formulario f = new Formulario();
         
         i.lerMatriz(matriz, imagem);
