@@ -1447,8 +1447,9 @@ public class Img {
         int[] hist = histograma(matriz);
         for(int i = 0; i < hist.length; i++){
             
-            v = (int) (v+(hist[i]*(Math.pow((i-m),2))));
+            v = (int) (v+(hist[i]*(Math.pow((i-m), 2))));
         }
+        v = v/nPixel;
         v = (int) Math.sqrt(v);
         return v;
     }
