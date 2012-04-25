@@ -1,4 +1,4 @@
-package imagem;
+package Formulario;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -13,34 +13,37 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class FormularioVisao {
+public class FormularioVarianca {
     
     private BufferedImage imagem = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
-    private BufferedImage imagemResultado = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage imagemVlMedio = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
+    private BufferedImage imagemVarianca = new BufferedImage(100, 200, BufferedImage.TYPE_INT_RGB);
    
     private ImageIcon icon;
-    private ImageIcon iconResultado;
+    private ImageIcon iconVlMedio;
+    private ImageIcon iconVarianca;
     
     private JFrame f = new JFrame("Imagem");
     
     public void exibir(){
         icon =  new ImageIcon(imagem);
-        iconResultado =  new ImageIcon(imagemResultado);
-        
+        iconVlMedio =  new ImageIcon(imagemVlMedio);
+        iconVarianca = new ImageIcon(imagemVarianca);
         
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         //System.out.println(d.width+"x"+d.height);
         JPanel p = new JPanel();
         JLabel lblImagem = new JLabel();
-        JLabel lblImagemResultado = new JLabel();
+        JLabel lblImagemVlmedio = new JLabel();
+        JLabel lblImagemVarianca = new JLabel();
         
         lblImagem.setIcon(icon);
-        lblImagemResultado.setIcon(iconResultado);
-        
+        lblImagemVlmedio.setIcon(iconVlMedio);
+        lblImagemVarianca.setIcon(iconVarianca);
         
         p.add(lblImagem);
-        p.add(lblImagemResultado, BorderLayout.EAST);
-        
+        p.add(lblImagemVlmedio, BorderLayout.EAST);
+        p.add(lblImagemVarianca, BorderLayout.EAST);
         //p.add(lblProjecaoHorizontal);
         //p.add(lblProjecaoVertical);
         //p.add(lblHistograma);
@@ -65,9 +68,13 @@ public class FormularioVisao {
         this.imagem = imagem;
     }
 
-    public void setImagemResultado(BufferedImage imagemResultado) {
-            this.imagemResultado = imagemResultado;
+    public void setImagemVlMedio(BufferedImage imagemVlMedio) {
+            this.imagemVlMedio = imagemVlMedio;
     }
+
+	public void setImagemVarianca(BufferedImage imagemVarianca) {
+		this.imagemVarianca = imagemVarianca;
+	}
 
     
     

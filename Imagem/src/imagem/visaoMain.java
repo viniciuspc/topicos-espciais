@@ -4,6 +4,7 @@
  */
 package imagem;
 
+import Formulario.FormularioVisao;
 import processadoresImagem.Visao;
 
 /**

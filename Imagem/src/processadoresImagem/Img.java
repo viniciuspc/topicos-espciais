@@ -201,7 +201,7 @@ public class Img {
      * @param matrizOriginal
      * @param matriz
      */
-    public void contraste(double valor, int[][][] matrizOriginal, int[][][] matriz){
+    public void contraste_rgb(double valor, int[][][] matrizOriginal, int[][][] matriz){
     	
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
@@ -234,6 +234,28 @@ public class Img {
             }
         }
     }
+    
+    /**
+     * 
+     * @param valor
+     * @param matrizOriginal
+     * @param matriz
+     */
+    public int[][] contraste(double valor, int[][] matriz){
+    	int[][] matrizResultado = new int[matriz.length][matriz[0].length];
+    	
+        for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                double c = matriz[coluna][linha] * (valor);
+                
+                //seta os tons de cinza na matriz
+                matrizResultado[coluna][linha] = limitar((int) c);
+            }
+        }
+        
+        return matrizResultado;
+    }
+    
     /**
      * 
      * @param matrizOriginal

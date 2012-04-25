@@ -5,16 +5,19 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import Formulario.Formulario;
+
 import processadoresImagem.Img;
 
 public class OtsuMain {
 	
 	public static void main(String args[]) throws Exception{
 		Img i = new Img();
-		BufferedImage imagem = ImageIO.read(new File("imagem2.jpg"));
-        BufferedImage imagemResultado = ImageIO.read(new File("imagem2.jpg"));
+		BufferedImage imagem = ImageIO.read(new File("lego1.jpg"));
+        BufferedImage imagemResultado = ImageIO.read(new File("lego1.jpg"));
         int[][] matriz = i.lerArquivo(imagem);
-        int[][] matrizResultado = i.otsu(matriz);
+        int[][] matrizResultado = i.contraste(3, matriz);
+        matrizResultado = i.otsu(matrizResultado);
         
         Formulario f = new Formulario();
         
