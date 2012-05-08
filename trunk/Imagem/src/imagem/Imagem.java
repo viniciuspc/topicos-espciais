@@ -16,7 +16,7 @@ public class Imagem {
         BufferedImage imagem = ImageIO.read(new File("imagem3.jpg"));
         BufferedImage imagemResultado = ImageIO.read(new File("imagem3.jpg"));
         Img i = new Img();
-        int[][][] matriz = i.lerArquivoRgb(imagem);
+        int[][][] matriz = i.lerBufferRgb(imagem);
         int[][][] matrizResultado = i.equalizar_rgb(matriz);
         Formulario f = new Formulario();
         
@@ -56,12 +56,12 @@ public class Imagem {
         int[][][] matriz;
         Img i = new Img();
         //Do arquivo para o buffer para a matriz
-        matriz = i.lerArquivoRgb(imagem);
+        matriz = i.lerBufferRgb(imagem);
         /**
          * Usado onde for nescessario usar uma mascara
          */
         int[][][] matrizResultado;
-        matrizResultado = i.lerArquivoRgb(imagemResultado);
+        matrizResultado = i.lerBufferRgb(imagemResultado);
         
         
         int[][] matrizRegioes = new int[i.getLargura()][i.getAltura()];
@@ -125,10 +125,10 @@ public class Imagem {
         //Da matriz para o buffer
         i.lerMatriz(matriz, imagem);
         i.lerMatriz(matrizResultado, imagemResultado);
-        i.lerMatriz(projecaoHorizontal, grficoProjecaoHorizontal);
-        i.lerMatriz(projecaoVertical, grficoProjecaoVertical);
+        grficoProjecaoHorizontal = i.lerMatriz(projecaoHorizontal);
+        grficoProjecaoVertical = i.lerMatriz(projecaoVertical );
         i.lerHistograma(histograma, graficoHistograma);
-        i.lerMatriz(matrizSubtracao, imagemSubtracao);
+        imagemSubtracao = i.lerMatriz(matrizSubtracao );
         
         //i.salvar(imagem, "lego-negativo-cor");
 

@@ -15,14 +15,14 @@ public class OtsuMain {
 		Img i = new Img();
 		BufferedImage imagem = ImageIO.read(new File("lego1.jpg"));
         BufferedImage imagemResultado = ImageIO.read(new File("lego1.jpg"));
-        int[][] matriz = i.lerArquivo(imagem);
+        int[][] matriz = i.lerBuffer(imagem);
         int[][] matrizResultado = i.contraste(3, matriz);
         matrizResultado = i.otsu(matrizResultado);
         
         Formulario f = new Formulario();
         
-        i.lerMatriz(matriz, imagem);
-        i.lerMatriz(matrizResultado, imagemResultado);
+        imagem = i.lerMatriz(matriz);
+        imagemResultado = i.lerMatriz(matrizResultado );
         f.setImagem(imagem);
         f.setImagemResultado(imagemResultado);
         
