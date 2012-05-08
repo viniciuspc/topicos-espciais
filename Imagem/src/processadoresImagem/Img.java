@@ -1085,7 +1085,7 @@ public class Img {
     
     public void histograma(int[][][] matriz, int[][] histograma){
     	final int NUM_PIXEL = largura*altura;
-    	System.out.println(NUM_PIXEL);
+    	//System.out.println(NUM_PIXEL);
     	int[] arrayHistograma = new int[256];
     	
     	 for (int linha = 0; linha <= 100; linha++) {
@@ -1148,7 +1148,7 @@ public class Img {
     
     public void projecaoVertical(int[][][] matriz, int[][] projecaoVertical){
     	final int NUM_PIXEL = largura*altura;
-    	System.out.println(NUM_PIXEL);
+    	//System.out.println(NUM_PIXEL);
     	int[] arrayProjecaoVertical = new int[largura+1];
     	
     	brancoMatriz(projecaoVertical);
@@ -1177,7 +1177,7 @@ public class Img {
     
     public void projecaoHorizontal(int[][][] matriz, int[][] projecaoHorizontal ){
     	final int NUM_PIXEL = largura*altura;
-    	System.out.println(NUM_PIXEL);
+    	//System.out.println(NUM_PIXEL);
     	int[] arrayHorizontal = new int[altura+1];
     	brancoMatriz(projecaoHorizontal);
     	
@@ -1531,7 +1531,7 @@ public class Img {
     
     private void lerMatrizCaracteristicas(int[][] matrizCaracteristicas){
     	System.out.println("Matriz de carecteristicas:");
-    	System.out.println("Objeto\t\t\t\tSuperior\t\t\tInferior\t\t\tEsquerda\t\t\tDireita\t\t\tAltura\t\t\tLarguara\t\t\tNumero de Pontos\t\t\tDensidade");
+    	System.out.println("Objeto\t\t\t\tSuperior\t\t\tInferior\t\t\tEsquerda\t\t\tDireita\t\t\t\tAltura\t\t\t\tLarguara\t\t\t\tNumero de Pontos\t\t\t\tDensidade");
     	
     	int largura = matrizCaracteristicas.length;
         int altura = matrizCaracteristicas[0].length;

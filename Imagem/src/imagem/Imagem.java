@@ -11,17 +11,18 @@ import Formulario.Formulario;
 
 public class Imagem {
 	
-	
+	//Equalizacao
     public static void main (String[] args) throws Exception{
-        BufferedImage imagem = ImageIO.read(new File("imagem3.jpg"));
-        BufferedImage imagemResultado = ImageIO.read(new File("imagem3.jpg"));
+        String arquivo = "imagem.jpg";
+        BufferedImage imagem = ImageIO.read(new File(arquivo));
+        BufferedImage imagemResultado = ImageIO.read(new File(arquivo));
         Img i = new Img();
-        int[][][] matriz = i.lerBufferRgb(imagem);
-        int[][][] matrizResultado = i.equalizar_rgb(matriz);
+        int[][] matriz = i.lerBuffer(imagem);
+        int[][] matrizResultado = i.equalizar(matriz);
         Formulario f = new Formulario();
         
-        i.lerMatriz(matriz, imagem);
-        i.lerMatriz(matrizResultado, imagemResultado);
+        imagem = i.lerMatriz(matriz);
+        imagemResultado = i.lerMatriz(matrizResultado);
         f.setImagem(imagem);
         f.setImagemResultado(imagemResultado);
         
@@ -30,6 +31,7 @@ public class Imagem {
         
     }
 
+    //Subtracao de fundo
     public static void main_(String[] args) throws IOException, InterruptedException {
         long agora = System.currentTimeMillis();
         Formulario f = new Formulario();
