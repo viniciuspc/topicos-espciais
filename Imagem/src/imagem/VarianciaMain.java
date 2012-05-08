@@ -22,9 +22,9 @@ public class VarianciaMain {
         BufferedImage imagemVlMedio = ImageIO.read(new File("imagem.jpg"));
         BufferedImage imagemVarianca = ImageIO.read(new File("imagem.jpg"));
         Img i = new Img();
-        int[][] matriz = i.lerArquivo(imagem);
-        int[][] matrizVlMedio = i.lerArquivo(imagemVlMedio);
-        int[][] matrizVarianca = i.lerArquivo(imagemVarianca);
+        int[][] matriz = i.lerBuffer(imagem);
+        int[][] matrizVlMedio = i.lerBuffer(imagemVlMedio);
+        int[][] matrizVarianca = i.lerBuffer(imagemVarianca);
         int vlMedio = i.vlMedio(matriz);
         int varianca = i.variancia(matriz);
         System.out.println("Valor Médio: "+vlMedio);
@@ -33,9 +33,9 @@ public class VarianciaMain {
         matrizVarianca = i.limiar_threshould(varianca, matrizVarianca);
         FormularioVarianca f = new FormularioVarianca();
         
-        i.lerMatriz(matriz, imagem);
-        i.lerMatriz(matrizVlMedio, imagemVlMedio);
-        i.lerMatriz(matrizVarianca, imagemVarianca);
+        imagem = i.lerMatriz(matriz);
+        imagemVlMedio = i.lerMatriz(matrizVlMedio);
+        imagemVarianca = i.lerMatriz(matrizVarianca);
         f.setImagem(imagem);
         f.setImagemVlMedio(imagemVlMedio);
         f.setImagemVarianca(imagemVarianca);

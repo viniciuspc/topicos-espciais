@@ -28,7 +28,7 @@ public class Img {
 	 * @param imagem
 	 * @return
 	 */
-    public int[][][]  lerArquivoRgb(BufferedImage imagem) {
+    public int[][][]  lerBufferRgb(BufferedImage imagem) {
     	int[][][] matriz;
         largura = imagem.getWidth();
         altura = imagem.getHeight();
@@ -48,7 +48,13 @@ public class Img {
         
     }
     
-    public int[][]  lerArquivo(BufferedImage imagem) {
+    public int[][][] lerArquivoRgb(String arquivo) throws IOException{
+		BufferedImage imagem = ImageIO.read(new File("imagem3.jpg"));
+		return lerBufferRgb(imagem);
+	
+}
+    
+    public int[][]  lerBuffer(BufferedImage imagem) {
     	int[][] matriz;
         largura = imagem.getWidth();
         altura = imagem.getHeight();
@@ -64,6 +70,12 @@ public class Img {
         }
         return matriz;
         
+    }
+    
+    public int[][] lerArquivo(String arquivo) throws IOException{
+			BufferedImage imagem = ImageIO.read(new File(arquivo));
+			return lerBuffer(imagem);
+		
     }
     
     
@@ -85,16 +97,18 @@ public class Img {
         }
     }
     
-    public void lerMatriz(int[][] matriz, BufferedImage imagem) {
+    public BufferedImage lerMatriz(int[][] origem) {
+    	int largura = origem.length;
+        int altura = origem[0].length;
+        BufferedImage imagem = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
         for (int linha = 0; linha < altura; linha++) {
             for (int coluna = 0; coluna < largura; coluna++) {
-                int r = matriz[coluna][linha];
-                int g = matriz[coluna][linha];
-                int b = matriz[coluna][linha];
-                Color pixel = new Color(r, g, b);
+                int valor = origem[coluna][linha];
+                Color pixel = new Color(valor, valor, valor);
                 imagem.setRGB(coluna, linha, pixel.getRGB());
             }
         }
+        return imagem;
     }
     
     public void lerHistograma(int[][] matriz, BufferedImage imagem) {
@@ -959,7 +973,7 @@ public class Img {
      * @param matriz
      * @param matrizRegioes
      */
-    public void vizinhanca_4(int[][][] matriz, int[][] matrizRegioes){
+    public void contarObjetos(int[][] matriz, int[][] matrizRegioes){
     	
         int c = 0;
         List<Integer> listaRelacao = new ArrayList<Integer>();
@@ -969,7 +983,7 @@ public class Img {
         
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
-                if(matriz[coluna][linha][0] == 0){
+                if(matriz[coluna][linha] == 0){
                     vs = matrizRegioes[coluna][linha-1];
                     ve = matrizRegioes[coluna-1][linha];
                     
@@ -1062,11 +1076,11 @@ public class Img {
         
         for (int linha = 1; linha < altura-2; linha++) {
             for (int coluna = 1; coluna < largura-2; coluna++) {
-            	matriz[coluna][linha][0] = matrizRegioes[coluna][linha]*tonsDeCinza;
-            	matriz[coluna][linha][1] = matrizRegioes[coluna][linha]*tonsDeCinza;
-            	matriz[coluna][linha][2] = matrizRegioes[coluna][linha]*tonsDeCinza;
+            	matriz[coluna][linha] = matrizRegioes[coluna][linha]*tonsDeCinza;
             }    
         }
+        
+        this.preencherMatrizCaracteristicas(listaRelacaoSemRepitacao, matrizRegioes);
     }
     
     public void histograma(int[][][] matriz, int[][] histograma){
@@ -1333,8 +1347,6 @@ public class Img {
         
     }
     
-    
-    
     /**
      * 
      * @param matriz 
@@ -1447,6 +1459,91 @@ public class Img {
     	int threshold = otsu.doThreshold(srcData);
     	System.out.println("Limiar calculado: "+threshold);
     	return limiar_threshould(threshold, matriz);
+    	
+    }
+    
+    public void preencherMatrizCaracteristicas(List<Integer> listaObjetos, int[][] matrizRegioes){
+    	
+        int[][] matrizCaracteristicas = new int[listaObjetos.size()][8]; //Características: 0 - Superior, 1 - Inferior, 2 - Esquerda, 3 - Direita, 4 - Altura, 5 - Largura, 6 - Número de Pontos, 7 - Densidade
+
+        for (int i = 1; i < listaObjetos.size(); i++){
+
+            matrizCaracteristicas[i][0] = -1;
+            matrizCaracteristicas[i][1] = -1;
+            matrizCaracteristicas[i][2] = -1;
+            matrizCaracteristicas[i][3] = -1;
+            matrizCaracteristicas[i][4] = 0;
+            matrizCaracteristicas[i][5] = 0;
+            matrizCaracteristicas[i][6] = 0;
+            matrizCaracteristicas[i][7] = 0;
+
+        }
+
+        for (int i = 1; i < listaObjetos.size(); i++){
+
+            int objeto = listaObjetos.get(i);
+            
+            for (int linha = 0; linha < altura; linha++) {
+                for (int coluna = 0; coluna < largura; coluna++) {
+                	
+                    if (matrizRegioes[coluna][linha] == objeto){
+
+                        if (matrizCaracteristicas[i][0] == -1)
+                            matrizCaracteristicas[i][0] = linha;
+
+                        if (matrizCaracteristicas[i][1] == -1)
+                            matrizCaracteristicas[i][1] = linha;
+                        else if (linha > matrizCaracteristicas[i][1])
+                            matrizCaracteristicas[i][1] = linha;
+
+                        if (matrizCaracteristicas[i][2] == -1)
+                            matrizCaracteristicas[i][2] = coluna;
+                        else if (coluna < matrizCaracteristicas[i][2])
+                            matrizCaracteristicas[i][2] = coluna;
+
+                        if (matrizCaracteristicas[i][3] == -1)
+                            matrizCaracteristicas[i][3] = coluna;
+                        else if (coluna > matrizCaracteristicas[i][3])
+                            matrizCaracteristicas[i][3] = coluna;
+
+                        matrizCaracteristicas[i][6]++;
+
+                    }
+                    
+
+                }
+                
+            }
+            
+            
+        }
+        
+        for (int i = 1; i < listaObjetos.size(); i++){
+        	matrizCaracteristicas[i][4] = (matrizCaracteristicas[i][1] - matrizCaracteristicas[i][0]) + 1;
+        	matrizCaracteristicas[i][5] = (matrizCaracteristicas[i][3] - matrizCaracteristicas[i][2]) + 1;
+        	if(matrizCaracteristicas[i][6] > 0)
+        		matrizCaracteristicas[i][7] = (matrizCaracteristicas[i][6]*100)/(matrizCaracteristicas[i][4] * matrizCaracteristicas[i][5]);
+        }
+        
+        this.lerMatrizCaracteristicas(matrizCaracteristicas);
+
+    }
+    
+    private void lerMatrizCaracteristicas(int[][] matrizCaracteristicas){
+    	System.out.println("Matriz de carecteristicas:");
+    	System.out.println("Objeto\t\t\t\tSuperior\t\t\tInferior\t\t\tEsquerda\t\t\tDireita\t\t\tAltura\t\t\tLarguara\t\t\tNumero de Pontos\t\t\tDensidade");
+    	
+    	int largura = matrizCaracteristicas.length;
+        int altura = matrizCaracteristicas[0].length;
+        String s = "";
+        for (int coluna = 1; coluna < largura; coluna++) {
+        	s += coluna + "\t\t\t\t";
+        	for (int linha = 0; linha < altura; linha++) {
+            	s += matrizCaracteristicas[coluna][linha] + "\t\t\t\t";
+            }
+            s += "\n";
+    	}
+    	System.out.println(s);
     	
     }
     
