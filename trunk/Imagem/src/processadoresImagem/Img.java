@@ -1572,6 +1572,25 @@ public class Img {
         v = (int) Math.sqrt(v);
         return v;
     }
+    /**
+     * 
+     * @param matriz
+     * @return 
+     */
+    public double entropia(int[][] matriz){
+        double t = (double) matriz.length * matriz[0].length;
+        double e = 0.0;
+        double p = 0.0;
+        int h[] = this.histograma(matriz);
+        for(int i = 0; i < h.length; i++){
+            if(h[i]>0){
+                p=h[i]/t;
+                e=e+p*Math.log10(p);
+            }
+        }
+        
+        return -e;
+    }
 
     public int getAltura() {
         return altura;
