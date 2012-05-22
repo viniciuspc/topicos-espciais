@@ -8,6 +8,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import Formulario.FormularioVarianca;
+import java.awt.image.BufferedImage;
 
 import processadoresImagem.Img;
 
