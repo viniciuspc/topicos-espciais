@@ -1559,6 +1559,52 @@ public class Img {
         return m;
     }
     
+    public int[][] textura (int[][] matriz, int divC, int divL){
+        int ci=0;
+        int cf=0;
+        int li=0;
+        int lf=0;
+        
+        int incC = (matriz.length / divC);
+        int incL = (matriz[0].length / divL);
+        
+        int[][] ret = new int[divC][divL];
+        
+        for(int c = 0; c < divC; c++){
+            cf += incC;
+            lf=0;
+            for(int l = 0; l < divL; l++){
+                
+                lf += incL;
+                
+                ret[c][l] = vlMedio2(ci, li, cf, lf, matriz);
+                li+=incL;
+            }
+            ci+=incC;
+            li=0;
+        }
+        
+        
+        
+        return ret;
+    }
+    
+    
+    public int vlMedio2(int ci, int li, int cf, int lf, int[][] matriz){
+        int largura = cf-ci;
+        int altura = lf-li;
+        int nPixel = largura * altura;
+        int[][] setor = prrencheSetor(ci, li, cf, lf, matriz) ;
+        int m = 0;
+        int[] hist = histograma(setor);
+        for(int i = 0; i < hist.length; i++){
+            m = m+(hist[i]*i);
+        }
+        m = m/nPixel;
+        
+        return m;
+    }
+    
     public int variancia(int[][] matriz){
         int nPixel = matriz.length * matriz[0].length;
         int v = 0;
@@ -1572,6 +1618,37 @@ public class Img {
         v = (int) Math.sqrt(v);
         return v;
     }
+    
+    public int variancia2(int ci, int li, int cf, int lf, int[][] matriz){
+        int nPixel = matriz.length * matriz[0].length;
+        int v = 0;
+        int[][] setor = prrencheSetor(ci, li, cf, lf, matriz) ;
+        int m = vlMedio(setor);
+        int[] hist = histograma(setor);
+        for(int i = 0; i < hist.length; i++){
+            
+            v = (int) (v+(hist[i]*(Math.pow((i-m), 2))));
+        }
+        v = v/nPixel;
+        v = (int) Math.sqrt(v);
+        return v;
+    }
+    
+    public int simetria(int[][] matriz){
+        int nPixel = matriz.length * matriz[0].length;
+        int v = 0;
+        int m = vlMedio(matriz);
+        
+        int[] hist = histograma(matriz);
+        for(int i = 0; i < hist.length; i++){
+            
+            v = (int) (v+(hist[i]*(Math.pow((i-m), 3))));
+        }
+        v = v/nPixel;
+        v = (int) Math.sqrt(v);
+        return v;
+    }
+    
     /**
      * 
      * @param matriz
@@ -1590,6 +1667,20 @@ public class Img {
         }
         
         return -e;
+    }
+    
+    public int[][] prrencheSetor(int ci, int li, int cf, int lf, int[][] matriz){
+        int largura = cf-ci;
+        int altura = lf-li;
+        int[][] setor = new int[largura][altura];
+        
+         for (int linha = 0; linha < altura; linha++) {
+            for (int coluna = 0; coluna < largura; coluna++) {
+                setor[coluna][linha] = matriz[coluna+ci][linha+li];
+            }
+        }
+        
+        return setor;
     }
 
     public int getAltura() {
