@@ -1576,8 +1576,15 @@ public class Img {
             for(int l = 0; l < divL; l++){
                 
                 lf += incL;
+                int vlmedio = vlMedio2(ci, li, cf, lf, matriz);
+                ret[c][l] = vlmedio;
                 
-                ret[c][l] = vlMedio2(ci, li, cf, lf, matriz);
+                for(int cc = ci; cc < cf; cc++){
+                    for(int ll = li; ll <lf; ll++){
+                        matriz[cc][ll] = vlmedio;
+                    }
+                }
+                
                 li+=incL;
             }
             ci+=incC;
