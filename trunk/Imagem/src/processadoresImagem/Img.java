@@ -1637,7 +1637,7 @@ public class Img {
             v = (int) (v+(hist[i]*(Math.pow((i-m), 2))));
         }
         v = v/nPixel;
-        v = (int) Math.sqrt(v);
+        
         return v;
     }
     

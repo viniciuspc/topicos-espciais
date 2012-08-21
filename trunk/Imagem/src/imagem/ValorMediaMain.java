@@ -47,9 +47,8 @@ public class ValorMediaMain {
         System.out.println("Variancia do Histograma: "+varianca);
         
         
-        /*
-        matrizVlMedio = i.limiar_threshould(vlMedio, matrizVlMedio);
-        matrizVarianca = i.limiar_threshould(varianca, matrizVarianca);
+        
+        
         FormularioVarianca f = new FormularioVarianca();
         
         
@@ -62,6 +61,6 @@ public class ValorMediaMain {
         
         f.exibir();
         f.getJFrame().setVisible(true);
-        */
+        
     } 
 }
